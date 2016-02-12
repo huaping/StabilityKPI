@@ -39,6 +39,8 @@ sudo python setup.py install
 We modified uiautomator to catch crash and output to robot reports
 
 ```
+pip install uiautomator
+OR https://github.com/xiaocong/uiautomator
 unzip uiautomator.zip
 cd uiautomator && sudo python setup.py install
 ```
