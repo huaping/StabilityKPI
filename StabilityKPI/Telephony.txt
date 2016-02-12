@@ -1,0 +1,12 @@
+*** Settings ***
+Test Setup        Testcase Setup
+Test Teardown     Testcase Teardown
+Resource          Resources/Call.txt
+Resource          Resources/Common.txt
+
+*** Test Cases ***
+MTBF-003_Dial number
+    [Tags]    MTBF
+    : FOR    ${round}    IN RANGE    ${round_dial}
+    \    Make Phone Call    10086
+    \    Wait And End Call

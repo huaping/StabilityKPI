@@ -1,0 +1,19 @@
+*** Settings ***
+Resource          Resources/Phonebook.txt
+Resource          Resources/Common.txt
+Resource          Resources/PIM.txt
+
+*** Test Cases ***
+MTBF-002_Add and Delete Contact
+    [Tags]    MTBF
+    : FOR    ${i}    IN RANGE    ${round_Pb}
+    \    Create New Contact
+    \    Delete Contact
+
+MTBF-017 Callendar Events
+    [Tags]    MTBF
+    :FOR    ${index}    IN RANGE    ${round_callendar}
+    \    Open Callendar App
+    \    Create Callendar Events    This is Callendar events
+    \    Check Callendar Events    This is Callendar events
+    \    Delete Callendar Events

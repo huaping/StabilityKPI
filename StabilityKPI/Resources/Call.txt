@@ -1,0 +1,10 @@
+*** Settings ***
+Library           ../UiKpiTest.py    ${MUT1}    WITH NAME    MUT1
+
+*** Keywords ***
+Make Phone Call
+    [Arguments]    ${number}
+    MUT1.Dial Number    ${number}
+
+Wait And End Call
+    MUT1.Wait End Call

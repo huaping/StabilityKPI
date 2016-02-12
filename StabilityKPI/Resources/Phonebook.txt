@@ -1,0 +1,15 @@
+*** Settings ***
+Library           ../UiKpiTest.py    ${MUT1}    WITH NAME    MUT1
+
+*** Keywords ***
+Open Phonebook
+    MUT1.Open Application    com.android.contacts/.activities.PeopleActivity --activity-clear-top
+    MUT1.Wait For UI Exists    1000    packageName=com.android.contacts
+
+Create New Contact
+    Open Phonebook
+    MUT1.Add New Contact    AAAA BBBB    10086
+
+Delete Contact
+    MUT1.Open Application    com.android.contacts/.activities.PeopleActivity --activity-clear-top
+    MUT1.Delete Contact    AAAA BBBB

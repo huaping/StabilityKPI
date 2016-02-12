@@ -1,0 +1,4 @@
+*** Settings ***
+Resource          Resources/Browser.txt
+
+*** Test Cases ***

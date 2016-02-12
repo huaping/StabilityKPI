@@ -1,0 +1,31 @@
+*** Settings ***
+Test Setup        Testcase Setup
+Test Teardown     Testcase Teardown
+Resource          Resources/Common.txt
+Resource          Resources/Messaging.txt
+
+*** Test Cases ***
+MTBF_04_05_Open SMS and Forward SMS
+    [Tags]    MTBF
+    : FOR    ${index}    IN RANGE    ${round_sms}
+    \    Open Messaging App
+    \    Open Message by Content    SMS content
+    \    Forward Message    13910573271    SMS content
+    \    Delete Message By Contact Name    3271
+
+MTBF_06 Forward MMS and Delete Sent
+    [Tags]    MTBF
+    : FOR    ${index}    IN RANGE    ${round_send_mms}
+    \    Open Messaging App
+    \    Open Message by Content    This is MMS
+    \    Forward Message    13910573271    This is MMS    True
+    \    Delete Message By Contact Name    3271
+    \    Goto Home
+
+MTBF_07 Open MMS
+    [Tags]    MTBF
+    : FOR    ${index}    IN RANGE    ${round_openMMS}
+    \    Open Messaging App
+    \    Open Message by Content    This is MMS
+    \    Play SlideShow
+    \    Goto Home

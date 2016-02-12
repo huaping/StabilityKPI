@@ -1,0 +1,45 @@
+*** Settings ***
+Library           ../UiKpiTest.py    ${MUT1}    WITH NAME    MUT1
+
+*** Keywords ***
+Open Recorder App
+    MUT1.Open Recorder App
+
+Delete Recorded files
+    MUT1.Delete Record Files
+
+Record 5 seconds Voice
+    MUT1.Record Voice    5
+
+Play Recorded Files
+    MUT1.Play Recorded Voice
+
+Open Music Player
+    MUT1.Open Music App
+
+Play Music Shuffle
+    MUT1.Play Music Shuffle All
+
+Open Ongoing music
+    MUT1.Open Ongoing Music
+
+Play Next Music
+    [Arguments]    ${duration}
+    MUT1.Play Next Music    ${duration}
+
+Stop Music Playing
+    MUT1.Pause music playing
+
+Play Music Next 20 times
+    : FOR    ${i}    IN RANGE    20
+    \    Play Next Music    7
+
+Open Camera
+    MUT1.Open Camera App
+
+Capture Photo Or Video
+    [Arguments]    ${mode}
+    MUT1.Capture Picture Video    ${mode}
+
+Open File from Camera and Delete
+    MUT1.Open file From Camera    True

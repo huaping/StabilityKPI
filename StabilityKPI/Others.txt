@@ -1,0 +1,41 @@
+*** Settings ***
+Test Setup        Testcase Setup
+Test Teardown     Testcase Teardown
+Resource          Resources/Others.txt
+Resource          Resources/Common.txt
+
+*** Variables ***
+
+*** Test Cases ***
+MTBF-025 Home Apps Browsing
+    [Tags]    MTBF
+    [Template]    Open App From Home
+    @{calendar}
+    @{settings}
+    @{fileExplorer}
+    @{calculator}
+    @{dialer}
+    @{contact}
+    @{messaging}
+    @{browser}
+    @{camera}
+    @{recoder}
+    @{clock}
+    @{email}
+    @{flashlight}
+    @{notepad}
+    @{music}
+    @{downloads}
+    @{gallery}
+    @{backup}
+    @{videoplayer}
+    @{wps}
+
+MTBF-024 File Manager folder handle
+    [Tags]    MTBF
+    :FOR    ${index}    IN RANGE    ${round_filemanager}
+    \    Open File manager
+    \    Filemanager Create Folder    010
+    \    Filemanager Check File Exists    010
+    \    Filemanager Delete Folder    010
+    \    Filemanager Check file not exists    010

@@ -1,0 +1,17 @@
+*** Settings ***
+Library           ../UiKpiTest.py    ${MUT1}    WITH NAME    MUT1
+
+*** Keywords ***
+Open Callendar App
+    MUT1.Open Callendar App
+
+Create Callendar Events
+    [Arguments]    ${title}
+    MUT1.Create Callendar Events    ${title}
+
+Check Callendar Events
+    [Arguments]    ${title}
+    MUT1.Check Callendar Events    ${title}
+
+Delete Callendar Events
+    MUT1.Delete Callendar Events

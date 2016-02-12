@@ -1,0 +1,33 @@
+*** Settings ***
+Library           ../UiKpiTest.py    ${MUT1}    WITH NAME    MUT1
+Library           ../UiKpiTest.py    ${MUT2}    WITH NAME    MUT2
+
+*** Variables ***
+${round_Pb}       20    #phone book
+${round_dial}     10    #Dial number round
+${round_sms}      3
+${round_send_mms}    2
+${round_openMMS}    30
+${round_voice}    1
+${round_music}    2
+${round_capVideo}    2
+${round_capPhoto}    20
+${round_filemanager}    2
+${round_callendar}    6
+
+*** Keywords ***
+Suite Setup
+    MUT1.Crash Watchers
+
+Suite Teardown
+
+Testcase Setup
+    Log    test start...
+    Goto Home
+
+Testcase Teardown
+    Run Keyword If Test Failed    MUT1.Take Screenshot    0.3    70
+    Goto Home
+
+GoTo Home
+    MUT1.Goto Home

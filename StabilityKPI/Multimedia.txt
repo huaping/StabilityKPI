@@ -1,0 +1,42 @@
+*** Settings ***
+Test Setup        Testcase Setup
+Test Teardown     Testcase Teardown
+Resource          Resources/Multimedia.txt
+Resource          Resources/Common.txt
+
+*** Test Cases ***
+MTBF-019 Voice Recording, Play and Delete
+    [Tags]    MTBF
+    : FOR    ${index}    IN RANGE    ${round_voice}
+    \    Open Recorder App
+    \    Delete Recorded files
+    \    Record 5 seconds Voice
+    \    Play Recorded Files
+    \    Delete Recorded files
+
+MTBF-021 Open Music player, playing, close
+    [Tags]    MTBF
+    : FOR    ${index}    IN RANGE    ${round_music}
+    \    Open Music Player
+    \    Play Music Shuffle
+    \    Open Ongoing Music
+    \    Play Music Next 20 times
+    \    Goto Home
+    \    Stop Music Playing
+    \    Goto Home
+
+MTBF-022 Capture Video
+    [Tags]    MTBF
+    : FOR    ${index}    IN RANGE    ${round_capVideo}
+    \    Open Camera
+    \    Capture Photo Or Video    video
+    \    Open File from Camera and Delete
+    \    Goto Home
+
+MTBF-023 Capture photo
+    [Tags]    MTBF
+    : FOR    ${index}    IN RANGE    ${round_capPhoto}
+    \    Open Camera
+    \    Capture Photo Or Video    still
+    \    Open File from Camera and Delete
+    \    Goto Home

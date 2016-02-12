@@ -1,0 +1,21 @@
+*** Settings ***
+Library           ../UiKpiTest.py    ${MUT1}    WITH NAME    MUT1
+
+*** Keywords ***
+Open Messaging App
+    MUT1.Open Message App
+
+Open Message by Content
+    [Arguments]    ${content}
+    MUT1.Open Message    ${content}
+
+Forward Message
+    [Arguments]    ${phoneNum}    ${content}    ${mms}=False
+    MUT1.Forward Message    ${phoneNum}    ${content}
+
+Delete Message By Contact Name
+    [Arguments]    ${contact}
+    MUT1.Delete Msg By PhoneNum    ${contact}
+
+Play SlideShow
+    MUT1.Play Slideshow MMS

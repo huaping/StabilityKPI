@@ -1,0 +1,4 @@
+*** Settings ***
+Library           ../UiKpiTest.py    MUT1    WITH NAME    MUT1
+
+*** Keywords ***

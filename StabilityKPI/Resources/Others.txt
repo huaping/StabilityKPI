@@ -1,0 +1,50 @@
+*** Settings ***
+Library           ../UiKpiTest.py    ${MUT1}    WITH NAME    MUT1
+
+*** Variables ***
+@{calendar}       Calendar    com.android.calendar
+@{settings}       Settings    com.android.settings
+@{fileExplorer}    File Explorer    com.cloudminds.filemanager
+@{calculator}     Calculator    com.android.calculator2
+@{dialer}         Phone    com.android.phone
+@{contact}        Contacts    com.android.contacts
+@{messaging}      Messaging    com.android.mms
+@{browser}        Browser    com.android.swe.browser
+@{camera}         Camera    org.codeaurora.snapcam
+@{recoder}        Sound Recorder    com.cloudminds.soundrecorder
+@{clock}          Clock    com.android.deskclock
+@{email}          Email    com.android.email
+@{flashlight}     Flashlight    com.android.flashlight
+@{notepad}        Notepad    com.cloudminds.notepad
+@{music}          Music    com.cloudminds.music2
+@{downloads}      Downloads    com.android.providers.downloads.ui
+@{gallery}        Gallery    com.android.gallery3d
+@{backup}         Backup and Restore    com.android.backup
+@{videoplayer}    VideoPlayer    com.cloudminds.video
+@{wps}            WPS Office    cn.wps.moffice_eng
+
+*** Keywords ***
+Open App From Home
+    [Arguments]    ${app}    ${verify}
+    MUT1.Open App From Home    ${app}    ${verify}
+
+Open file manager
+    MUT1.Open File Manager
+
+Filemanager Create Folder
+    [Arguments]    ${folder}
+    MUT1.Filemanager create folder    ${folder}
+
+Filemanager Check File Exists
+    [Arguments]    ${folder}
+    ${result}    MUT1.Filemanager check file exists    ${folder}
+    Should be true    ${result}    File ${folder} does not exists
+
+Filemanager Delete folder
+    [Arguments]    ${folder}
+    MUT1.Filemanager delete file    ${folder}
+
+Filemanager Check file not exists
+    [Arguments]    ${folder}
+    ${result}    MUT1.Filemanager check file exists    ${folder}
+    Should NOT Be True    ${result}    File ${folder} does exists
