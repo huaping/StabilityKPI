@@ -6,16 +6,6 @@ This is stability test for CMCC MTBF usage, it's just a demo, if you download, y
 Precondition
 ---
 
-when installing these pacakge, you need set proxy for the terminal, or you use other methods to let the PC can connect internet in terminal and pip
-> Please following the instructions: [https://wiki.sonyericsson.net/androiki/Local_Proxy](https://wiki.sonyericsson.net/androiki/Local_Proxy)
-> sometimes, above doesn't work, so using
-
-```
-export http_proxy=http://somc_id:password@proxy.global.sonyericsson.net:8080
-
-```
-
-
 Python2.7
 ---
 
