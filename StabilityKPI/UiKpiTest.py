@@ -28,7 +28,7 @@ class UiKpiTest(UiTestLib):
             print Exception, ":", e
             print "Exception happens"
             return False
-        
+
     def add_new_contact(self, name, number):
         """Add contact with name and number"""
         add_btn = 'com.android.contacts:id/floating_action_button'
@@ -37,12 +37,12 @@ class UiKpiTest(UiTestLib):
             self.click_ui(resourceId=add_btn)
         else:
             return False
-        
+
         self.wait_for_ui_exists(1000, text='Add new contact')
         self.type_text(name, text='Name', className='android.widget.EditText')
         self.type_text(number, text='Phone', className='android.widget.EditText')
         self.click_ui(resourceId=save_btn)
-    
+
     def delete_contact(self, name):
         """delete contacts"""
         large_icon = 'com.android.contacts:id/photo_touch_intercept_overlay'
@@ -62,11 +62,11 @@ class UiKpiTest(UiTestLib):
             status = self.get_call_status()
             #print status
             if status == '2':
-                return True                
+                return True
             else:
                 time.sleep(1)
         return False
-    
+
     def wait_end_call(self, timeout = 4):
         try:
             if self.wait_and_connection(8):
@@ -92,7 +92,7 @@ class UiKpiTest(UiTestLib):
     def open_message_app(self):
         self.open_application('com.android.mms/.ui.ConversationList')
         return self.wait_for_ui_exists(3000, packageName='com.android.mms')
-    
+
     def create_new_message(self):
         #com.android.mms:id/floating_action_button
         #com.android.mms:id/recipients_editor
@@ -100,7 +100,7 @@ class UiKpiTest(UiTestLib):
         #send com.android.mms:id/send_button_sms
         #com.android.mms:id/send_button_mms  MMS
         pass
-    
+
     def open_message(self, content):
         """open message by content"""
         try:
@@ -115,7 +115,7 @@ class UiKpiTest(UiTestLib):
             print Exception, ":", e
             self.logmsg("open message failed.")
             return False
-            
+
     def forward_message(self, phoneNum, content, mms):
         """preconditon: open message
         phoneNum: to send to
@@ -150,7 +150,7 @@ class UiKpiTest(UiTestLib):
             print Exception, ":", e
             self.logmsg("Forward message exception happens.")
             return False
-    
+
     def delete_msg_by_phoneNum(self, contact):
         """precondition: conversation mode
         long press phone number/contact name to delete conversation
@@ -167,7 +167,7 @@ class UiKpiTest(UiTestLib):
         except Exception, e:
             print Exception, ":", e
             return False
-      
+
     def play_slideshow_mms(self):
         """precondition: the mms is opened"""
         id_slideshow = 'com.android.mms:id/play_slideshow_button'
@@ -181,7 +181,7 @@ class UiKpiTest(UiTestLib):
             print Exception, ":", e
             self.logmsg("Play slide show exception happens.")
             return False
-    
+
     #################################################
     #
     #  Browser test cases
@@ -191,7 +191,7 @@ class UiKpiTest(UiTestLib):
         """Open browser application"""
         self.open_application('com.android.swe.browser/com.android.browser.BrowserLauncher')
         return self.wait_for_ui_exists(3000, packageName='com.android.swe.browser')
-    
+
     def close_browser_app(self):
         moreBtn = 'com.android.browser:id/more_browser_settings'
         self.press_key('menu')
@@ -199,7 +199,7 @@ class UiKpiTest(UiTestLib):
         self.click_text('Exit')
         self.click_id("android:id/button1") #Quit
         return not self.wait_for_ui_exists(300, packageName='com.android.swe.browser')
-    
+
     def clear_browser_privacy(self):
         """preconditon: in browser main window
         postcondition: in browser main window"""
@@ -223,7 +223,7 @@ class UiKpiTest(UiTestLib):
             print Exception, ":", e
             self.logmsg("Clear browser privacy exception happens")
             return False
-    
+
     def open_page(self, url='http://news.baidu.com'):
         """precodtion: in browser main window"""
         try:
@@ -235,7 +235,7 @@ class UiKpiTest(UiTestLib):
             print Exception, ":", e
             self.logmsg('Open Page Failed.')
             return False
-    
+
     def open_download_file(self, fileName):
         """Download file"""
         try:
@@ -251,7 +251,7 @@ class UiKpiTest(UiTestLib):
             print Exception, ":", e
             self.logmsg('Open failed.')
             return False
-            
+
     def verify_open(self, appName, **selectors):
         """Verify intent open files, try to use appName to open and verify **selectors"""
         try:
@@ -266,7 +266,7 @@ class UiKpiTest(UiTestLib):
             print Exception, ":", e
             self.logmsg("Verified Failed")
             return False
-    
+
     def delete_file_in_downloads(self, fileName):
         try:
             self.open_application('com.android.providers.downloads.ui/.DownloadList')
@@ -283,7 +283,7 @@ class UiKpiTest(UiTestLib):
             print Exception, ":", e
             self.logmsg('delete failed.')
             return False
-    
+
     #############################################
     #
     #       Home Icon Open
@@ -313,7 +313,7 @@ class UiKpiTest(UiTestLib):
             print Exception, ":", e
             self.logmsg('Open application %s exception' % appName)
             return False
-    
+
     ################## Multimedia ###################
     def open_recorder_app(self):
         """open recorder"""
@@ -330,7 +330,7 @@ class UiKpiTest(UiTestLib):
             lstHome='com.cloudminds.soundrecorder:id/btn_recorder_home_list'
             ckb = 'com.cloudminds.soundrecorder:id/select_checkbox'
             deleteBtn = 'com.cloudminds.soundrecorder:id/delectOrShare'
-            
+
             uiStatus = self.check_record_ui_status()
             if uiStatus == 0:
                 self.click_id(lstHome)
@@ -354,7 +354,7 @@ class UiKpiTest(UiTestLib):
             print Exception, ":", e
             self.logmsg('Delete failed.')
             return False
-    
+
     def check_record_ui_status(self):
         """return status 0, 1, 2, 3
         0  --- main window
@@ -369,10 +369,10 @@ class UiKpiTest(UiTestLib):
             return 3
         elif self.wait_for_ui_exists(300, resourceIdMatches='.*/search_text'):
             return 2
-        
+
         else:
             return 255
-    
+
     def record_voice(self, duration):
          #com.cloudminds.soundrecorder:id/text_time
          #com.cloudminds.soundrecorder:id/btn_recorder_home_recording
@@ -392,18 +392,18 @@ class UiKpiTest(UiTestLib):
                  self.click_ui(resourceIdMatches='.*btn_recorder_home_recording')
              else:
                  return False
-             
+
              self.wait_for_ui_exists(3000, resourceIdMatches='.*ico_recorder_home_circle_3')
              time.sleep(int(duration))
              self.click_ui(resourceIdMatches='.*btn_recorder_home_recording')
              time.sleep(1)
              return self.wait_for_ui_exists(1000, textMatches="Voice\d+\..*")
-             
+
          except Exception, e:
              print Exception, ":", e
              self.logmsg('Record voice failed.')
              return False
-             
+
     def play_recorded_voice(self):
         #com.cloudminds.soundrecorder:id/seekBar
         try:
@@ -425,7 +425,7 @@ class UiKpiTest(UiTestLib):
         except:
             self.logmsg('Play sound error')
             return False
-            
+
     def open_music_app(self):
         """"""
         try:
@@ -435,7 +435,7 @@ class UiKpiTest(UiTestLib):
             print Exception, ":", e
             self.logmsg('Exception when open music app')
             return False
-            
+
     def play_music_shuffle_all(self):
         #audio_player_current_time
         #action_button_play
@@ -448,7 +448,7 @@ class UiKpiTest(UiTestLib):
             print Exception, ":", e
             self.logmsg('Play music shuffle all Exception happens')
             return False
-            
+
     def open_ongoing_music(self):
         try:
             self.click_ui(resourceIdMatches='.*/bottom_action_bar_line_one')
@@ -457,7 +457,7 @@ class UiKpiTest(UiTestLib):
             print Exception, ":", e
             self.logmsg('open ongoing music failed, exception happens.')
             return False
-    
+
     def play_next_music(self, duration):
         try:
             if not self.wait_for_ui_exists(800, resourceIdMatches='.*/action_button_previous'):
@@ -479,13 +479,13 @@ class UiKpiTest(UiTestLib):
             print Exception, ":", e
             self.logmsg('Stop music playing failed or no playing music')
             return False
-    
+
     ##### Camera  #####
     def open_camera_app(self):
         """"""
         #org.codeaurora.snapcam:id/filmstrip_bottom_controls   --video mode
         #org.codeaurora.snapcam:id/shutter_button
-        #org.codeaurora.snapcam:id/camera_switcher  
+        #org.codeaurora.snapcam:id/camera_switcher
         #org.codeaurora.snapcam:id/mdp_preview_content ---still mode
         #org.codeaurora.snapcam:id/preview_thumb
         try:
@@ -495,7 +495,7 @@ class UiKpiTest(UiTestLib):
             print Exception, ":", e
             self.logmsg('Exception happens when openning camera app')
             return False
-    
+
     def open_camera_mode(self, mode):
         """
         still --- still mode
@@ -526,11 +526,11 @@ class UiKpiTest(UiTestLib):
             print Exception, ":", e
             self.logmsg('Switch camera Exception')
             return False
-    
+
     def capture_picture_video(self, mode, duration=60):
         """"""
         try:
-            
+
             if mode=='still':
                 self.open_camera_mode('still')
                 self.click_ui(resourceIdMatches='.*shutter_button')
@@ -568,18 +568,18 @@ class UiKpiTest(UiTestLib):
                     self.press_key('back')
                 self.delete_files_gallery_view(delete)
                 return True
-                
+
             elif self.wait_for_ui_exists(400, text='Slideshow'):
                 self.logmsg('it is a photo')
                 self.press_key('back')
                 self.delete_files_gallery_view(delete)
                 return True
-                
+
         except Exception, e:
             print Exception, ":", e
             self.logmsg('no picture or exception happens')
             return False
-            
+
     def delete_files_gallery_view(self, delete):
         """delete file on gallery"""
         try:
@@ -596,19 +596,19 @@ class UiKpiTest(UiTestLib):
         except Exception, e:
             print Exception, ":", e
             return False
-            
+
     def crash_watchers(self):
         self.d.watcher('AUTO_FC_WHEN_ANR').when(textMatches='.*is.*responding.*').click(resourceIdMatches='.*button1')
         self.d.watcher('Auto_FC_CRASH').when(textMatches='Unfortunately.*stopped.*').click(resourceIdMatches='.*button1')
         self.d.watchers.run()
-    
+
     ### File manager handling  ####
     def open_file_manager(self):
         #Folder, Category
         #Storage information
         self.open_application('com.cloudminds.filemanager/.MainActivity')
         return self.wait_for_ui_exists(2000, packageName='com.cloudminds.filemanager')
-    
+
     def filemanager_tab(self, tab):
         if tab == 'folder':
             self.click_text('Folder')
@@ -616,7 +616,7 @@ class UiKpiTest(UiTestLib):
         else:
             self.click_text('Category')
             return self.wait_for_ui_exists(2000, text='Storage information')
-    
+
     def filemanager_create_folder(self, folderName, storage='internal'):
         try:
             self.filemanager_tab('folder')
@@ -631,7 +631,7 @@ class UiKpiTest(UiTestLib):
         except Exception, e:
             print Exception, ':', e
             return False
-    
+
     def filemanager_check_file_exists(self, fileName):
         try:
             toFind = fileName+'.*'
@@ -640,7 +640,7 @@ class UiKpiTest(UiTestLib):
         except Exception, e:
             return False
             print Exception, ':', e
-            
+
     def filemanager_delete_file(self, fileName):
         try:
             toFind = fileName+'.*'
@@ -652,7 +652,7 @@ class UiKpiTest(UiTestLib):
         except Exception, e:
             print Exception, ':', e
             return False
-    
+
     ########################################################
     #           PIM
     #########################################################
@@ -660,7 +660,7 @@ class UiKpiTest(UiTestLib):
         """"""
         self.open_application('com.android.calendar/.AllInOneActivity')
         return self.wait_for_ui_exists(3000, resourceIdMatches='.*action_today')
-    
+
     def create_callendar_events(self, title):
         self.calendar_main_window()
         self.click_ui(resourceIdMatches='.*floating_action_button')
@@ -668,13 +668,13 @@ class UiKpiTest(UiTestLib):
         self.type_text(title, resourceIdMatches='.*title')
         self.type_text('Wangjing SOHU A, Beijing, China', resourceIdMatches='.*location')
         self.click_text('Done')
-    
+
     def check_callendar_events(self, title):
         self.calendar_main_window()
         self.press_key('menu')
         self.click_text('Delete events')
         return self.wait_for_ui_exists(3000, textContains=title)
-    
+
     def delete_callendar_events(self):
         self.calendar_main_window()
         self.press_key('menu')
@@ -683,13 +683,13 @@ class UiKpiTest(UiTestLib):
             chkbox = self.d(resourceIdMatches='.*checkbox')
             for i in range(chkbox.count):
                 self.click_ui(resourceIdMatches='.*checkbox', instance=i)
-                
+
             self.click_ui(resourceIdMatches='.*action_delete')
             self.click_ui(resourceIdMatches='.*button1')
             return True
         else:
             return False
-    
+
     def callendar_status(self):
         """
         0       --- Main window
@@ -702,7 +702,7 @@ class UiKpiTest(UiTestLib):
             return 1
         elif self.wait_for_ui_exists(300, resourceIdMatches='.*location'):
             return 2
-    
+
     def calendar_main_window(self):
         status =self.callendar_status()
         if status == 0:
@@ -714,15 +714,146 @@ class UiKpiTest(UiTestLib):
         else:
             self.press_key('back')
         return self.wait_for_ui_exists(300, resourceIdMatches='.*action_today')
-        
-    
+
+        #### Email ####
+    def open_email_app(self):
+            self.open_application('com.android.email/.activity.Welcome')
+            return self.wait_for_ui_exists(3000, resourceIdMatches='.*conversation_list_view')
+
+    def email_navigation(self, where):
+            """
+            Inbox
+            Starred
+            Unread
+            Drafts
+            Outbox
+            Sent
+            Trash
+            """
+            try:
+                self.email_goto_main()
+                if self.d(resourceIdMatches='.*mail_toolbar').child(text=where).exists:
+                    print 'alreayd in %s ' % where
+                    return True
+                self.click_ui(description='Navigate up')
+                time.sleep(0.5)
+                self.click_ui(resourceIdMatches='.*name', text=where)
+                time.sleep(0.5)
+                return self.d(resourceIdMatches='.*mail_toolbar').child(text=where).exists
+            except Exception, e:
+                print Exception, ':', e
+                return False
+
+    def open_email_subject(self, title):
+        try:
+            if self.wait_for_ui_exists(2000, resourceIdMatches='.*conversation_list_view'):
+                self.click_ui(descriptionMatches='.*%s.*'%title)
+                return self.wait_for_ui_exists(2000, resourceIdMatches='.*subject_and_folder_view', descriptionMatches='.*%s.*'%title)
+            else:
+                return False
+        except Exception, e:
+            print Exception, ':', e
+            return False
+
+    def email_ui_status(self):
+        """
+        0   -- inbox
+        2 -- starred
+        3 --- unread
+        4 --- Sent
+        5 --- Trash
+        6 ---  a openned mail conversation
+        255 -- for main navigation UI, which can setup a new mail
+        """
+        if self.wait_for_ui_exists(500, resourceIdMatches='.*compose_button'):
+            return 255
+        elif self.d(resourceIdMatches='.*mail_toolbar').child_by_text('Inbox').exists:
+            return 0
+        elif self.d(resourceIdMatches='.*mail_toolbar').child_by_text('Starred').exists:
+            return 1
+        elif self.d(resourceIdMatches='.*mail_toolbar').child_by_text('Unread').exists:
+            return 2
+        elif self.d(resourceIdMatches='.*mail_toolbar').child_by_text('Outbox').exists:
+            return 3
+        elif self.d(resourceIdMatches='.*mail_toolbar').child_by_text('Sent').exists:
+            return 4
+        elif self.d(resourceIdMatches='.*mail_toolbar').child_by_text('Trash').exists:
+            return 5
+        elif self.wait_for_ui_exists(500, resourceIdMatches='.*content_pane'):
+            return 6
+        else:
+            return -1
+
+    def forward_email(self, email_addr):
+        # on an openned message
+        try:
+            #com.android.email:id/forward_button
+            self.click_ui(resourceIdMatches='.*forward_button')
+            if not self.wait_for_ui_exists(1000, textStartsWith='Fwd:'):
+                return False
+            self.type_text(email_addr, resourceId='com.android.email:id/to')
+            time.sleep(0.5)
+            self.click_id('com.android.email:id/send')
+            time.sleep(2)
+            return not self.wait_for_ui_exists(1000, resourceId='com.android.email:id/to')
+        except Exception, e:
+            print Exception, ':', e
+            return False
+
+    def email_goto_main(self):
+        status = self.email_ui_status()
+        print 'status:', status
+        if status == 6:
+            self.press_key('back')
+        if  self.email_ui_status() != 255:
+            print 'sss:', self.email_ui_status()
+            self.open_email_app()
+        return self.email_ui_status() == 255
+
+    def delete_all_sent_mails(self):
+        try:
+            if self.email_navigation('Sent'):
+                if self.wait_for_ui_exists(300, resourceIdMatches='.*empty_view'):
+                    return True
+                #try to delete all messages in sent mail
+                tryTimes = 1
+                while self.d(className='android.widget.ListView').child(className='android.widget.FrameLayout').exists and tryTimes < 100:
+                    self.d(className='android.widget.ListView').child(className='android.widget.FrameLayout').long_click()
+                    if self.wait_for_ui_exists(500, resourceIdMatches='.*delete'):
+                         self.click_ui(resourceIdMatches='.*delete')
+                    else:
+                        return False
+                    tryTimes = tryTimes+1
+
+                return self.wait_for_ui_exists(500, resourceIdMatches='.*empty_view')
+            else:
+                return False
+        except Exception, e:
+             print Exception, ':', e
+             return False
+
+    def check_sentbox_not_empty(self):
+        """
+        true is not empty
+        false is empty
+        """
+        return not self.wait_for_ui_exists(500, resourceIdMatches='.*empty_view')
+
+
 if __name__ == "__main__":
     import sys
     p = UiKpiTest('0123456789ABCDEF')
-    p.open_callendar_app()
-    p.create_callendar_events('This is a callendar events')
-    p.check_callendar_events('This is a callendar events')
-    p.delete_callendar_events()
+    print p.open_email_app()
+    print p.email_navigation('Inbox')
+    print p.open_email_subject('This is a mail')
+    print p.forward_email('alex.qi@cloudminds.com')
+    time.sleep(3)
+    print p.email_navigation('Sent')
+    print p.delete_all_sent_mails()
+    #p.open_callendar_app()
+    #p.create_callendar_events('This is a callendar events')
+    #p.check_callendar_events('This is a callendar events')
+    #p.delete_callendar_events()
     #~ print p.open_file_manager()
     #~ print p.filemanager_create_folder('010')
     #~ print p.filemanager_check_file_exists('010')
@@ -746,8 +877,8 @@ if __name__ == "__main__":
     #~ print p.open_music_app()
     #~ print p.open_ongoing_music()
     #~ print p.play_next_music('5')
-    
-    
+
+
     #print p.play_music_shuffle_all()
     #print p.check_record_ui_status()
     #~ p.open_recorder_app()

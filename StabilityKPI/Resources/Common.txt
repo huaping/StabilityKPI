@@ -14,6 +14,7 @@ ${round_capVideo}    2
 ${round_capPhoto}    20
 ${round_filemanager}    2
 ${round_callendar}    6
+${round_email}    5
 
 *** Keywords ***
 Suite Setup

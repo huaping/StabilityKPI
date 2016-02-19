@@ -40,3 +40,10 @@ MTBF-023 Capture photo
     \    Capture Photo Or Video    still
     \    Open File from Camera and Delete
     \    Goto Home
+
+Stress Capture photo
+    [Tags]    MTBF
+    : FOR    ${index}    IN RANGE    200
+    \    Open Camera
+    \    Capture Photo Or Video    still
+    \    Goto Home

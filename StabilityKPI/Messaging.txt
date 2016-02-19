@@ -29,3 +29,16 @@ MTBF_07 Open MMS
     \    Open Message by Content    This is MMS
     \    Play SlideShow
     \    Goto Home
+
+MTBF-008 Send Email Without Attachment
+    [Tags]    MTBF
+    Open Email App
+    Delete All Sent Emails
+    Email Navigation    Inbox
+    Forward Email    This is a mail
+    Check Sentbox NOT Empty
+
+test
+    [Tags]    MTBF
+    Open Email App
+    Email navigation    Sent

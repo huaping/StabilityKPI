@@ -19,3 +19,32 @@ Delete Message By Contact Name
 
 Play SlideShow
     MUT1.Play Slideshow MMS
+
+Open Email App
+    MUT1.Open Email App
+
+Email Navigation
+    [Arguments]    ${whichbox}
+    MUT1.Email Navigation    ${whichbox}
+
+Delete All Sent Emails
+    Email Navigation    Sent
+    MUT1.Delete All Sent Mails
+
+Email Goto mainUI
+    MUT1.Email goto main
+
+Check Sentbox not Empty
+    Email Goto MainUI
+    Email navigation    Sent
+    ${result}    MUT1.Check Sentbox Not Empty
+    Should Be True    ${result}
+
+Forward Email
+    [Arguments]    ${title}
+    Open Email With Title    ${title}
+    MUT1.Forward Email    ${title}
+
+Open Email With Title
+    [Arguments]    ${title}
+    MUT1.Open Email Subject    ${title}
