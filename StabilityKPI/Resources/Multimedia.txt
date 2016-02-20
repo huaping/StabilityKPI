@@ -39,7 +39,12 @@ Open Camera
 
 Capture Photo Or Video
     [Arguments]    ${mode}
-    MUT1.Capture Picture Video    ${mode}
+    ${result}    MUT1.Capture Picture Video    ${mode}
+    Should Be True    ${result}    Capture picture/video failed
 
 Open File from Camera and Delete
     MUT1.Open file From Camera    True
+
+Capture button
+    MUT1.Click UI    resourceIdMatches=.*shutter_button
+    Sleep    1s

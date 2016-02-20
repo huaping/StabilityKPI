@@ -1,4 +1,41 @@
 *** Settings ***
-Library           ../UiKpiTest.py    MUT1    WITH NAME    MUT1
+Library           ../UiKpiTest.py    ${MUT1}    WITH NAME    MUT1
 
 *** Keywords ***
+Open Browser
+    ${result}    MUT1.Open Browser App
+    Should Be True    ${result}    Open browser failed.
+
+Clear Browser Privacy
+    ${result}    MUT1.Clear Browser Privacy
+
+Close Browser
+    ${result}    MUT1.Close Browser App
+
+Open Page
+    [Arguments]    ${url}=news.baidu.com
+    ${result}    MUT1.Open Page    url=${url}
+
+Delete File in Downloads
+    [Arguments]    ${file}
+    ${result}    MUT1.delete_file_in_downloads    ${file}
+    Should be True    ${result}    Delete ${file} Failed
+
+Open Download file
+    [Arguments]    ${file}
+    ${result}    MUT1.open_download_file    ${file}    timeout=20000
+    Should be True    ${result}    Open ${file} Failed
+
+Download File
+    [Arguments]    ${filename}
+    MUT1.Open Browser App
+    ${result}    Open Page    http://192.168.99.188/textdownload.php?file=${filename}
+    ${download}    MUT1.download save file    10000
+    Should be true    ${download}    Download ${filename} failed
+
+Open Link and Verify
+    [Arguments]    ${link}    ${verify}
+    ${result}    MUT1.Open Page    url=${link}
+    MUT1.click_at_coordinates     400    400
+    ${result}    MUT1.Wait For Ui Exists    4000    textContains=${verify}
+    Should Be True    ${result}    Open LINK ${verify} failed

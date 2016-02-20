@@ -14,13 +14,13 @@ import urllib2
 
 
 """
-UI Test Library for android and croft
+UI Test Library for android
 @author: Huaping Qi
 @version 0.2
 """
 
 class UiTestLib(object):
-    """This is Test library for testing Croft and host application.
+    """Ui Test Lib
 
     """
     def __init__(self, serial = None):
@@ -227,7 +227,11 @@ class UiTestLib(object):
         """
         self._result = self.d(**selectors).wait.exists( timeout = int(timeout))
         return self._result
-
+    def wait_and_click(self, timeout, **selectors):
+        """Wait for uiselector and click"""
+        if self.d(**selectors).wait.exists( timeout = int(timeout)):
+            self.d(**selectors).click
+        
     def assert_ui_exists(self, **selectors ):
         """
         Assert UiObject appear on the screen

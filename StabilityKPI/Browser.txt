@@ -1,4 +1,58 @@
 *** Settings ***
+Test Setup        Testcase Setup
+Test Teardown     Testcase Teardown
 Resource          Resources/Browser.txt
+Resource          Resources/Common.txt
 
 *** Test Cases ***
+MTBF-011_Browser_Open_Specific_Website
+    [Tags]    MTBF
+    : FOR    ${index}    IN RANGE    ${round_browser}
+    \    Open Browser
+    \    Clear Browser Privacy
+    \    Open Page
+    \    Close Browser
+
+MTBF-012 Download a text file
+    [Tags]    MTBF
+    : FOR    ${index}    IN RANGE    ${round_download}
+    \    Delete File in Downloads    text.txt
+    \    Download File    text.txt
+    \    Open Download file    text.txt
+    \    Goto Home
+    \    Delete File in Downloads    text.txt
+
+MTBF-014_Download a picture
+    [Tags]    MTBF
+    : FOR    ${index}    IN RANGE    ${round_download}
+    \    Delete File in Downloads    picturedownload.jpg
+    \    Download File    picturedownload.jpg
+    \    Open Download file    picturedownload.jpg
+    \    Goto Home
+    \    Delete File in Downloads    picturedownload.jpg
+
+MTBF-013_Download music file
+    [Tags]    MTBF
+    : FOR    ${index}    IN RANGE    ${round_download}
+    \    Delete File in Downloads    musicdownload.mp3
+    \    Download File    musicdownload.mp3
+    \    Open Download file    musicdownload.mp3
+    \    Goto Home
+    \    Delete File in Downloads    musicdownload.mp3
+
+MTBF-015_Download a Video file
+    [Tags]    MTBF
+    : FOR    ${index}    IN RANGE    ${round_download}
+    \    Delete File in Downloads    moviedownload.mp4
+    \    Download File    moviedownload.mp4
+    \    Open Download file    moviedownload.mp4
+    \    Goto Home
+    \    Delete File in Downloads    moviedownload.mp4
+
+MTBF-016_Browser_Open_Link
+    [Tags]    MTBF
+    :FOR    ${index}    IN RANGE    ${round_browser}
+    \    Open Browser
+    \    Clear Browser Privacy
+    \    Open Link and Verify    http://192.168.99.188/openlink.html    xw.qq.com
+    \    Close Browser

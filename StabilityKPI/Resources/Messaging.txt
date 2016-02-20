@@ -11,7 +11,7 @@ Open Message by Content
 
 Forward Message
     [Arguments]    ${phoneNum}    ${content}    ${mms}=False
-    MUT1.Forward Message    ${phoneNum}    ${content}
+    MUT1.Forward Message    ${phoneNum}    ${content}    ${mms}
 
 Delete Message By Contact Name
     [Arguments]    ${contact}

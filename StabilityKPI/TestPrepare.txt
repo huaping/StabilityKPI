@@ -1,0 +1,8 @@
+*** Settings ***
+Library           UiKpiTest.py    ${MUT1}    WITH NAME    MUT1
+
+*** Test Cases ***
+Email_account_prepare
+    [Tags]    Prepare
+    ${result}    MUT1.Setup Email Account
+    Should be true    ${result}

@@ -42,8 +42,10 @@ MTBF-023 Capture photo
     \    Goto Home
 
 Stress Capture photo
-    [Tags]    MTBF
-    : FOR    ${index}    IN RANGE    200
-    \    Open Camera
-    \    Capture Photo Or Video    still
-    \    Goto Home
+    [Tags]    Stress
+    Log    Stress Capture photo 200 times
+    Open Camera
+    Capture Photo Or Video    still
+    : FOR    ${index}    IN RANGE    199
+    \    Log    Capture ${i} times
+    \    Capture Button

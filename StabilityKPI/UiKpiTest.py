@@ -190,6 +190,8 @@ class UiKpiTest(UiTestLib):
     def open_browser_app(self):
         """Open browser application"""
         self.open_application('com.android.swe.browser/com.android.browser.BrowserLauncher')
+        if self.wait_for_ui_exists(3000, text='Quit'):
+            self.press_key('back')
         return self.wait_for_ui_exists(3000, packageName='com.android.swe.browser')
 
     def close_browser_app(self):
@@ -224,25 +226,26 @@ class UiKpiTest(UiTestLib):
             self.logmsg("Clear browser privacy exception happens")
             return False
 
-    def open_page(self, url='http://news.baidu.com'):
+    def open_page(self,  url='http://news.baidu.com', containsVerifiy='m.baidu.com/news'):
         """precodtion: in browser main window"""
         try:
             self.type_text(url, resourceId='com.android.browser:id/url')
+            time.sleep(0.5)
             self.press_key('enter')
             time.sleep(2)
-            return self.wait_for_ui_exists(6000, textContains='m.baidu.com/news?from')
+            return self.wait_for_ui_exists(6000, textContains=containsVerifiy)
         except Exception, e:
             print Exception, ":", e
             self.logmsg('Open Page Failed.')
             return False
 
-    def open_download_file(self, fileName):
+    def open_download_file(self, fileName, timeout=1000):
         """Download file"""
         try:
             self.open_application('com.android.providers.downloads.ui/.DownloadList')
             downList = self.wait_for_ui_exists(1000, resourceId='com.android.documentsui:id/toolbar')
             if downList:
-                self.wait_for_ui_exists(800, textContains=fileName)
+                self.wait_for_ui_exists(int(timeout), textContains=fileName)
                 self.click_ui(textContains=fileName)
                 return True
             else:
@@ -270,6 +273,9 @@ class UiKpiTest(UiTestLib):
     def delete_file_in_downloads(self, fileName):
         try:
             self.open_application('com.android.providers.downloads.ui/.DownloadList')
+            if self.wait_for_ui_exists(300, text='No items'):
+                print "No file exits"
+                return True
             downList = self.wait_for_ui_exists(2000, resourceId='com.android.documentsui:id/toolbar')
             print downList
             if downList:
@@ -283,7 +289,17 @@ class UiKpiTest(UiTestLib):
             print Exception, ":", e
             self.logmsg('delete failed.')
             return False
-
+    
+    def download_save_file(self, timeout):
+        """Precondition: On Download settings UI, press OK to download"""
+        status = self.wait_for_ui_exists(int(timeout), text="Download settings")
+        if not status:
+            print "timeout %s when download file" % timeout
+            return False
+        self.click_text('OK')
+        return True
+        
+    
     #############################################
     #
     #       Home Icon Open
@@ -489,6 +505,8 @@ class UiKpiTest(UiTestLib):
         #org.codeaurora.snapcam:id/mdp_preview_content ---still mode
         #org.codeaurora.snapcam:id/preview_thumb
         try:
+            if self.wait_for_ui_exists(300, resourceIdMatches='.*shutter_button'):
+                return True
             self.open_application('org.codeaurora.snapcam/com.android.camera.CameraLauncher')
             return self.wait_for_ui_exists(8000, resourceIdMatches='.*shutter_button')
         except Exception, e:
@@ -508,14 +526,16 @@ class UiKpiTest(UiTestLib):
             #film = self.wait_for_ui_exists(1000, resourceIdMatches='.*filmstrip_bottom_controls')
             mdp = self.wait_for_ui_exists(1000, resourceIdMatches='.*mdp_preview_content')
             if mode == 'still':
-                self.click_ui(resourceIdMatches='.*camera_switcher')
-                time.sleep(1)
+                if self.wait_for_ui_exists(300, resourceIdMatches='.*camera_switcher'):
+                    self.click_ui(resourceIdMatches='.*camera_switcher')
+                    time.sleep(1)
                 self.click_description('Switch to photo')
                 time.sleep(1)
                 return self.wait_for_ui_exists(1000, resourceIdMatches='.*mdp_preview_content')
             elif mode == 'video':
-                self.click_ui(resourceIdMatches='.*camera_switcher')
-                time.sleep(1)
+                if self.wait_for_ui_exists(300, resourceIdMatches='.*camera_switcher'):
+                    self.click_ui(resourceIdMatches='.*camera_switcher')
+                    time.sleep(1)
                 self.click_description('Switch to video')
                 time.sleep(1)
                 return self.wait_for_ui_exists(2000, resourceIdMatches='.*filmstrip_bottom_controls')
@@ -838,18 +858,76 @@ class UiKpiTest(UiTestLib):
         false is empty
         """
         return not self.wait_for_ui_exists(500, resourceIdMatches='.*empty_view')
+        
+    def setup_email_account(self, username='cloudminds001@sina.com', password='q111111'):
+        if self.open_email_app():
+            self.logmsg("already exits")
+            return True
+        else:
+            self.type_text(username, resourceIdMatches='.*account_email')
+            self.click_ui(resourceIdMatches='.*manual_setup')
+            self.click_text('Personal (POP3)')
+            self.type_text(password, resourceIdMatches='.*regular_password')
+            self.click_ui(resourceIdMatches='.*next')
+            self.type_text('pop.sina.com', resourceIdMatches='.*account_server')
+            self.scroll_to_find(text='STARTTLS')
+            self.click_text('STARTTLS')
+            self.click_text('None')
+            self.click_ui(resourceIdMatches='.*next')
+            time.sleep(5)
+            self.type_text('smtp.sina.com', resourceIdMatches='.*account_server')
+            self.scroll_to_find(text='STARTTLS')
+            self.click_text('STARTTLS')
+            self.click_text('None')
+            self.click_ui(resourceIdMatches='.*next')
+            if self.wait_for_ui_exists(5000, text="Account options"):
+                self.click_ui(resourceIdMatches='.*next')
+                self.wait_and_click(3000, resourceIdMatches='.*account_name')
+                self.type_text('cloudminds',resourceIdMatches='.*account_name')
+                self.click_ui(resourceIdMatches='.*next')
+                time.sleep(3)
+            else:
+                return False
+                
+            return self.wait_for_ui_exists(3000, resourceIdMatches='.*conversation_list_view')
+            
+    def prepare_log_tool(self, operation=None):
+        self.open_application('com.android.logtool/.LogTool')
+        if not self.wait_for_ui_exists(2000, packageName='com.android.logtool'):
+            return False
 
-
+        if not self.d(resourceIdMatches='.*check_main').checked:
+            self.click_ui(resourceIdMatches='.*check_main')
+        if not self.d(resourceIdMatches='.*check_radio').checked:
+            self.click_ui(resourceIdMatches='.*check_radio')
+        if not self.d(resourceIdMatches='.*check_events').checked:
+            self.click_ui(resourceIdMatches='.*check_events')
+        if not self.d(resourceIdMatches='.*check_system').checked:
+            self.click_ui(resourceIdMatches='.*check_system')
+        if not self.d(resourceIdMatches='.*check_crash').checked:
+            self.click_ui(resourceIdMatches='.*check_crash')
+        if not self.d(resourceIdMatches='.*check_kernel').checked:
+            self.click_ui(resourceIdMatches='.*check_kernel')
+        
+        if operation == 'clean':
+            self.click_id('com.android.logtool:id/bt_clean')
+        elif operation == 'save':
+            self.click_id('com.android.logtool:id/bt_pack')
+            time.sleep(10)
+            
+    
 if __name__ == "__main__":
     import sys
-    p = UiKpiTest('0123456789ABCDEF')
-    print p.open_email_app()
-    print p.email_navigation('Inbox')
-    print p.open_email_subject('This is a mail')
-    print p.forward_email('alex.qi@cloudminds.com')
-    time.sleep(3)
-    print p.email_navigation('Sent')
-    print p.delete_all_sent_mails()
+    p = UiKpiTest('ec8fc2f1')
+    #p.prepare_log_tool('save')
+    #print p.setup_email_account()
+    #~ print p.open_email_app()
+    #~ print p.email_navigation('Inbox')
+    #~ print p.open_email_subject('This is a mail')
+    #~ print p.forward_email('alex.qi@cloudminds.com')
+    #~ time.sleep(3)
+    #~ print p.email_navigation('Sent')
+    #~ print p.delete_all_sent_mails()
     #p.open_callendar_app()
     #p.create_callendar_events('This is a callendar events')
     #p.check_callendar_events('This is a callendar events')
@@ -893,9 +971,10 @@ if __name__ == "__main__":
     #~ print p.open_message("This is MMS")
     #~ print p.forward_message('13910573271', 'This is MMS', 'True')
     #~ p.delete_msg_by_phoneNum("3271")
-    #print p.open_browser_app()
-    #print p.clear_browser_privacy()
-    #print p.open_page()
+    print p.open_browser_app()
+    print p.clear_browser_privacy()
+    print p.open_page()
+    print p.close_browser_app()
     #print p.click_ui(textContains='139')
     #print p.verify_open('Browser', packageName='com.android.swe.browser')
     #print p.delete_file_in_downloads('weight.jpg')
