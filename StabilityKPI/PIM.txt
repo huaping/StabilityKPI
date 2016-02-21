@@ -12,8 +12,18 @@ MTBF-002_Add and Delete Contact
 
 MTBF-017 Callendar Events
     [Tags]    MTBF
-    :FOR    ${index}    IN RANGE    ${round_callendar}
+    : FOR    ${index}    IN RANGE    ${round_callendar}
     \    Open Callendar App
     \    Create Callendar Events    This is Callendar events
     \    Check Callendar Events    This is Callendar events
     \    Delete Callendar Events
+
+MTBF-018 Add Alarm and Delete
+    [Tags]    MTBF
+    :FOR    ${index}    IN RANGE    ${round_alarm}
+    \    Open Alarm Application
+    \    Delete All Alarms
+    \    Add Alarm
+    \    Sleep    2s
+    \    Delete All Alarms
+    \    Goto Home

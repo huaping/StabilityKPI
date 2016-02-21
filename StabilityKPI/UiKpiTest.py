@@ -24,6 +24,7 @@ class UiKpiTest(UiTestLib):
             self.type_text(number, resourceId="com.android.dialer:id/digits")
             time.sleep(1)
             self.click_ui(resourceId="com.android.dialer:id/dialpad_floating_action_button")
+            return True
         except Exception, e:
             print Exception, ":", e
             print "Exception happens"
@@ -60,7 +61,7 @@ class UiKpiTest(UiTestLib):
         start = time.time()
         while (time.time() - start) < int(timeout):
             status = self.get_call_status()
-            #print status
+            print 'wait_and_connection call status:', status
             if status == '2':
                 return True
             else:
@@ -68,6 +69,7 @@ class UiKpiTest(UiTestLib):
         return False
 
     def wait_end_call(self, timeout = 4):
+        """Wait call established and end call after timeout"""
         try:
             if self.wait_and_connection(8):
                 self.wait_for_ui_gone(15000, textContains="Calling via")
@@ -84,6 +86,34 @@ class UiKpiTest(UiTestLib):
             print Exception, ":", e
             print "Exception happens"
             return False
+
+    def background_call(self):
+        """press home key during call"""
+        try:
+            if self.wait_and_connection(8):
+                self.wait_for_ui_gone(15000, textContains="Calling via")
+                self.wait_for_ui_exists(8000, resourceId='com.android.dialer:id/elapsedTime')
+                status = self.get_call_status()
+                print 'call status:', status
+                if status == '2':
+                    self.logmsg("press Home key because it in calling")
+                    self.press_key('home')
+                status = self.get_call_status()
+                return status == '2'
+            else:
+                return False
+        except Exception, e:
+            print Exception, ":", e
+            print "Exception happens"
+            return False
+    
+    def end_call(self):
+        """press end call key"""
+        status = self.get_call_status()
+        if status == '2':
+            self.logmsg("End call because it in calling")
+            self.press_key('6')   #end call key
+                
     ##################################
     #
     #       Messaging
@@ -299,7 +329,12 @@ class UiKpiTest(UiTestLib):
         self.click_text('OK')
         return True
         
-    
+    def refesh_page(self):
+        if not self.wait_for_ui_exists(2000, resourceIdMatches='.*more_browser_settings'):
+            return False
+        self.click_ui(resourceIdMatches='.*more_browser_settings')
+        #Refresh
+        self.click_ui(resourceIdMatches='.*button_three')
     #############################################
     #
     #       Home Icon Open
@@ -734,11 +769,71 @@ class UiKpiTest(UiTestLib):
         else:
             self.press_key('back')
         return self.wait_for_ui_exists(300, resourceIdMatches='.*action_today')
-
-        #### Email ####
+    
+    def open_alarm_app(self):
+        """Open alarm application"""
+        self.open_application('com.android.deskclock/.DeskClock')
+        return self.wait_for_ui_exists(1000, packageName='com.android.deskclock')
+        
+    def clock_open(self, mode):
+        """
+        mode = alarm
+        mode = clock
+        mode = timer
+        mode = stopwatch
+        """
+        if mode == 'alarm':
+            if self.wait_for_ui_exists(1000, resourceIdMatches='.*alarms_list'):
+                return True
+            self.click_ui(description='Alarm')
+            return self.wait_for_ui_exists(1000, resourceIdMatches='.*alarms_list')
+        elif mode == 'clock':
+            if self.wait_for_ui_exists(1000, resourceIdMatches='.*cities'):
+                return True
+            self.click_ui(description='Clock')
+            return self.wait_for_ui_exists(1000, resourceIdMatches='.*cities')
+        elif mode == 'timer':
+            if self.wait_for_ui_exists(1000, resourceIdMatches='.*timer_time_text'):
+                return True
+            self.click_ui(description='Timer')
+            return self.wait_for_ui_exists(1000, resourceIdMatches='.*timer_time_text')
+        elif mode == 'stopwatch':
+            if self.wait_for_ui_exists(1000, resourceIdMatches='.*stopwatch_time_text'):
+                return True
+            self.click_ui(description='Stopwatch')
+            return self.wait_for_ui_exists(1000, resourceIdMatches='.*stopwatch_time_text')
+        else:
+            return False
+    
+    def delete_all_alarms(self):
+        """delete all alarms"""
+        try:
+            while self.wait_for_ui_exists(400, resourceIdMatches='.*arrow'):
+                if not self.wait_for_ui_exists(300, resourceIdMatches='.*delete'):
+                    self.click_ui(resourceIdMatches='.*arrow')
+                self.click_ui(resourceIdMatches='.*delete')
+                if self.wait_for_ui_exists(300, text='Alarm deleted.'):
+                    print 'Delete alarm successfully.'
+            return self.wait_for_ui_exists(3000, textContains='No Alarms')
+        except Exception, e:
+            print Exception, ':', e
+            return False
+            
+    def add_default_alarm(self):
+        try:
+            if not self.wait_for_ui_exists(1000, resourceId='com.android.deskclock:id/fab'):
+                print "not in add alarm UI"
+                return False
+            self.click_id('com.android.deskclock:id/fab')
+            self.click_id('android:id/button1')
+            return self.wait_for_ui_exists(2000, resourceIdMatches='.*digital_clock')
+        except Exception, e:
+            print Exception, ':', e
+            return False
+    ########### Email ##########
     def open_email_app(self):
-            self.open_application('com.android.email/.activity.Welcome')
-            return self.wait_for_ui_exists(3000, resourceIdMatches='.*conversation_list_view')
+        self.open_application('com.android.email/.activity.Welcome')
+        return self.wait_for_ui_exists(3000, resourceIdMatches='.*conversation_list_view')
 
     def email_navigation(self, where):
             """
@@ -915,10 +1010,50 @@ class UiKpiTest(UiTestLib):
             self.click_id('com.android.logtool:id/bt_pack')
             time.sleep(10)
             
-    
+    def open_wifi(self, mode):
+        """
+        on -- open wifi on
+        off -- turn wifi off
+        """
+        self.open_application("com.android.settings/.Settings")
+        self.scroll_to_find(text='WLAN')
+        self.click_text("WLAN")
+        if mode == 'on':
+            if self.d(resourceIdMatches='.*switch_widget').checked:
+                return True
+            self.click_ui(resourceIdMatches='.*switch_widget')
+            return self.d(resourceIdMatches='.*switch_widget', checked=True).wait.exists(timeout=3000)
+        elif mode == 'off':
+            if not self.d(resourceIdMatches='.*switch_widget').checked:
+                return True
+            self.click_ui(resourceIdMatches='.*switch_widget')
+            return self.d(resourceIdMatches='.*switch_widget', checked=False).wait.exists(timeout=3000)
+        else:
+            print "please confirm you set parameter on or off"
+            return False
 if __name__ == "__main__":
     import sys
-    p = UiKpiTest('ec8fc2f1')
+    #p = UiKpiTest('ec8fc2f1')
+    p = UiKpiTest('ec88c23e')
+    print p.dial_number('10086')
+    print p.background_call()
+    time.sleep(5)
+    print p.end_call()
+    #~ print p.open_wifi('on')
+    #~ print p.open_wifi('off')
+    #~ print p.open_wifi('on')
+    #~ print p.open_wifi('off')
+    #~ print p.open_wifi('on')
+    #~ print p.open_wifi('off')
+    #~ print p.open_wifi('on')
+    #~ print p.open_wifi('off')
+    #~ print p.open_wifi('on')
+    
+    
+    #~ print p.delete_all_alarms()
+    #~ print p.add_default_alarm()
+    #~ print p.delete_all_alarms()
+
     #p.prepare_log_tool('save')
     #print p.setup_email_account()
     #~ print p.open_email_app()
@@ -971,10 +1106,10 @@ if __name__ == "__main__":
     #~ print p.open_message("This is MMS")
     #~ print p.forward_message('13910573271', 'This is MMS', 'True')
     #~ p.delete_msg_by_phoneNum("3271")
-    print p.open_browser_app()
-    print p.clear_browser_privacy()
-    print p.open_page()
-    print p.close_browser_app()
+    #~ print p.open_browser_app()
+    #~ print p.clear_browser_privacy()
+    #~ print p.open_page()
+    #~ print p.close_browser_app()
     #print p.click_ui(textContains='139')
     #print p.verify_open('Browser', packageName='com.android.swe.browser')
     #print p.delete_file_in_downloads('weight.jpg')

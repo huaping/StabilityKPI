@@ -51,8 +51,16 @@ MTBF-015_Download a Video file
 
 MTBF-016_Browser_Open_Link
     [Tags]    MTBF
-    :FOR    ${index}    IN RANGE    ${round_browser}
+    : FOR    ${index}    IN RANGE    ${round_browser}
     \    Open Browser
     \    Clear Browser Privacy
     \    Open Link and Verify    http://192.168.99.188/openlink.html    xw.qq.com
     \    Close Browser
+
+MTBF-020 Streaming Test
+    [Tags]    MTBF
+    Open Browser
+    #Clear Browser Privacy
+    Open Streaming Link    rtsp://121.41.73.249/1001_home.sdp
+    Sleep    5s
+    Goto Home

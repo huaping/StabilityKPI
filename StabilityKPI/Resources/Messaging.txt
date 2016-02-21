@@ -3,7 +3,8 @@ Library           ../UiKpiTest.py    ${MUT1}    WITH NAME    MUT1
 
 *** Keywords ***
 Open Messaging App
-    MUT1.Open Message App
+    ${result}    MUT1.Open Message App
+    Should be true    ${result}    open mms failed
 
 Open Message by Content
     [Arguments]    ${content}
@@ -11,7 +12,8 @@ Open Message by Content
 
 Forward Message
     [Arguments]    ${phoneNum}    ${content}    ${mms}=False
-    MUT1.Forward Message    ${phoneNum}    ${content}    ${mms}
+    ${result}    MUT1.Forward Message    ${phoneNum}    ${content}    ${mms}
+    Should be true    ${result}    Forward msg failed
 
 Delete Message By Contact Name
     [Arguments]    ${contact}
@@ -43,7 +45,8 @@ Check Sentbox not Empty
 Forward Email
     [Arguments]    ${title}
     Open Email With Title    ${title}
-    MUT1.Forward Email    ${title}
+    ${result}    MUT1.Forward Email    ${title}
+    Should Be True    ${result}    Forward email failed
 
 Open Email With Title
     [Arguments]    ${title}

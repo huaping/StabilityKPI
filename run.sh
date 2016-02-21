@@ -1,12 +1,13 @@
 #!/bin/bash
 help__()
 {
-  echo "Usage: `basename ${0}` -s <Croft_BT_Addr> -m <MasterPhone> -p <PartnerPhone> -n <MasterPhoneNumber> [-r <ROUND>]"
+  echo "Usage: `basename ${0}` -m <MasterPhone> -p <PartnerPhone> -n <MasterPhoneNumber> [-r <ROUND>]"
   echo "Options: These are optional argument"
   echo " -m <MasterPhone>       - Master phone adb device serial"
   echo " -p <PartnerPhone>      - Partner phone adb device serial"
   echo " -n <MasterPhoneNumber> - Master phone number, using by call handling"
   echo " [-r <round>]           - Round of testing, default is round=1 "
+  echo " -t <tag>  default is MTBF"
   echo ""
   echo " Example:"
   printf '\e[1;31m'
@@ -16,20 +17,22 @@ help__()
 }
 
 LOGINFOMATION=0
-while getopts m:p:n:r:Ih opt
+RunTag=MTBF
+while getopts m:p:n:r:t:Ih opt
 do
   case "${opt}" in
     m) MUT1=${OPTARG};;
     p) MUT2=${OPTARG};;
     n) PHONE=${OPTARG};;
     r) ROUND=${OPTARG};;
+    t) RunTag=${OPTARG};;
     I) LOGINFOMATION=1;;
     h) help__;;
     \?) help__;;
   esac
 done
 #####Parameters checking #########
-if [[ -z "$MUT1" ]] || [[ -z "$MUT2" ]] || [[ -z "$PHONE" ]]
+if [[ -z "$MUT1" ]] 
 then
     help__
 fi
@@ -65,7 +68,7 @@ for((index=1;index<=$ROUND;index++))
     CREATED_TIME=`date +%F_%H%M%S`
     echo ${CREATED_TIME} "###Run Test Case for Round #$index"
     echo "========================================"
-    pybot $LOG_INFO -e NotImplemented -d Reports/stability_report_${CREATED_TIME} --variable MUT1:$MUT1 --variable MUT2:$MUT2 --variable PHONE:${PHONE} StabilityKPI
+    pybot $LOG_INFO --include=MTBF -d Reports/stability_report_${CREATED_TIME} --variable MUT1:$MUT1 StabilityKPI
 }
 
 ############End of Logcat ###########

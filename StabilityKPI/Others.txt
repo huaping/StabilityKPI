@@ -3,6 +3,8 @@ Test Setup        Testcase Setup
 Test Teardown     Testcase Teardown
 Resource          Resources/Others.txt
 Resource          Resources/Common.txt
+Resource          Resources/Browser.txt
+Resource          Resources/Call.txt
 
 *** Variables ***
 
@@ -33,9 +35,36 @@ MTBF-025 Home Apps Browsing
 
 MTBF-024 File Manager folder handle
     [Tags]    MTBF
-    :FOR    ${index}    IN RANGE    ${round_filemanager}
+    : FOR    ${index}    IN RANGE    ${round_filemanager}
     \    Open File manager
     \    Filemanager Create Folder    010
     \    Filemanager Check File Exists    010
     \    Filemanager Delete Folder    010
     \    Filemanager Check file not exists    010
+
+MTBF-026 Wifi
+    [Tags]    MTBF
+    : FOR    ${index}    IN RANGE    5
+    \    Open Wifi    off
+    \    Open Wifi    on
+    \    Open Wifi    on
+    Open Browser
+    Open Page
+    : FOR    ${index}    IN RANGE    ${round_wifi}
+    \    Refresh Page
+    \    Sleep    4s
+    Close Browser
+
+MTBF-027 Multi-task phone and browser
+    [Tags]    MTBF
+    [Timeout]    8 minutes
+    :FOR    ${index}    IN RANGE    ${round_multitask}
+    \    Background Call    10086
+    \    Open Browser
+    \    Open Page
+    \    Refresh Page
+    \    Press Key    home
+    \    Open OngoingCall
+    \    End Call
+    \    Open Browser
+    \    Close Browser

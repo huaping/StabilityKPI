@@ -15,3 +15,16 @@ Check Callendar Events
 
 Delete Callendar Events
     MUT1.Delete Callendar Events
+
+Open Alarm Application
+    ${result}    MUT1.Open Alarm App
+    Should Be True    ${result}    Open alarm failed
+
+Delete All Alarms
+    MUT1.Clock Open    alarm
+    MUT1.Delete All Alarms
+
+Add Alarm
+    MUT1.Clock Open    alarm
+    ${result}    MUT1.Add Default Alarm
+    Should Be True    ${result}    Add alarm failed.

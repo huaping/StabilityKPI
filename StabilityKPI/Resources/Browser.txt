@@ -15,6 +15,7 @@ Close Browser
 Open Page
     [Arguments]    ${url}=news.baidu.com
     ${result}    MUT1.Open Page    url=${url}
+    Should Be True    ${result}    open page failed
 
 Delete File in Downloads
     [Arguments]    ${file}
@@ -36,6 +37,20 @@ Download File
 Open Link and Verify
     [Arguments]    ${link}    ${verify}
     ${result}    MUT1.Open Page    url=${link}
-    MUT1.click_at_coordinates     400    400
+    MUT1.click_at_coordinates    400    400
     ${result}    MUT1.Wait For Ui Exists    4000    textContains=${verify}
     Should Be True    ${result}    Open LINK ${verify} failed
+
+Open Streaming Link
+    [Arguments]    ${link}
+    ${result}    MUT1.Open Page    url=${link}
+    ${result}    MUT1.verify_open    VideoPlayer    packageName=com.cloudminds.video
+    #Should Be True    ${result}    Open LINK ${verify} failed
+
+Open Wifi
+    [Arguments]    ${mode}
+    ${result}    MUT1.Open Wifi    ${mode}
+    Should Be True    ${result}    Open Wifi ${mode} Failed
+
+Refresh page
+    MUT1.Refesh Page

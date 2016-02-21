@@ -3,13 +3,15 @@ Library           ../UiKpiTest.py    ${MUT1}    WITH NAME    MUT1
 
 *** Keywords ***
 Open Recorder App
-    MUT1.Open Recorder App
+    ${result}    MUT1.Open Recorder App
+    Should Be True    ${result}    Open recorder failed
 
 Delete Recorded files
     MUT1.Delete Record Files
 
 Record 5 seconds Voice
-    MUT1.Record Voice    5
+    ${result}    MUT1.Record Voice    5
+    Should Be True    ${result}    Record voice failed
 
 Play Recorded Files
     MUT1.Play Recorded Voice

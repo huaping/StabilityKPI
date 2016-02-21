@@ -1,6 +1,5 @@
 *** Settings ***
 Library           ../UiKpiTest.py    ${MUT1}    WITH NAME    MUT1
-Library           ../UiKpiTest.py    ${MUT2}    WITH NAME    MUT2
 
 *** Variables ***
 ${round_Pb}       20    #phone book
@@ -17,6 +16,10 @@ ${round_callendar}    6
 ${round_email}    5
 ${round_browser}    3
 ${round_download}    5
+${round_alarm}    5
+${round_streaming}    2
+${round_wifi}     20
+${round_multitask}    30
 
 *** Keywords ***
 Suite Setup
@@ -34,3 +37,7 @@ Testcase Teardown
 
 GoTo Home
     MUT1.Goto Home
+
+Press Key
+    [Arguments]    ${key}
+    MUT1.Press Key    ${key}
