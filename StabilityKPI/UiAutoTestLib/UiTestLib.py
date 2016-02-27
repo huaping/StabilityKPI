@@ -69,7 +69,14 @@ class UiTestLib(object):
         | Exe Adb Command | shell getprop  |
         """
         return self.adb.cmd(cmd).wait()
-
+        
+    def exe_adb_and_result(self, cmd):
+        """Execute adb *cmd* and return lines of the command"""
+        lproc = self.adb.cmd(cmd)
+        lproc.poll()
+        lines = lproc.stdout.readlines()
+        return lines
+        
     def get_device_info(self):
         """Get Device information
         return info dictionary
@@ -227,10 +234,11 @@ class UiTestLib(object):
         """
         self._result = self.d(**selectors).wait.exists( timeout = int(timeout))
         return self._result
+    
     def wait_and_click(self, timeout, **selectors):
         """Wait for uiselector and click"""
         if self.d(**selectors).wait.exists( timeout = int(timeout)):
-            self.d(**selectors).click
+            self.d(**selectors).click()
         
     def assert_ui_exists(self, **selectors ):
         """
@@ -915,11 +923,43 @@ class UiTestLib(object):
         else:
             self.d(scrollable=True).fling.toEnd(max_swipes=max_swipes)
     
+    def get_uptime(self):
+        """up time: 1 days, 23:50:32, idle time: 4 days, sleep time: 1 days 03:54:24"""
+        line = self.exe_adb_and_result('shell uptime')
+        if not len(line):
+            return -1
+        #line = "up time: 1 days, 23:50:32, idle time: 4 days, sleep time: 1 days 03:54:24"
+        #line = "up time: 00:39:34, idle time: 03:47:15, sleep time: 00:00:00"
+        line = line[0]
+        uptime = line[0:line.find('idle time')]
+        uptime = uptime.replace('up time: ','')
+        uptime = uptime.split(',')
+        day = 0
+        h = 0
+        if uptime[0].find('days')>0:
+            day = uptime[0].split()[0]
+            h = uptime[1]
+            h = h.split(':')
+            hr = int(h[0])
+            m = int(h[1])
+            s = int(h[2])
+            h = hr*3600+m*60+s
+        else:
+            h = uptime[0]
+            h = h.split(':')
+            hr = int(h[0])
+            m = int(h[1])
+            s = int(h[2])
+            h = hr*3600+m*60+s
+        uptime = int(day)*24*3600 + h
+        return uptime
+        
 if __name__ == "__main__":
     #pass
-    p = UiTestLib('0123456789ABCDEF')
-    print p.get_device_info
-    p.click_ui(text='WPS Office')
+    p = UiTestLib('ec88c23e')
+    print p.get_uptime()
+    #print p.get_device_info
+    #p.click_ui(text='WPS Office')
     #p.make_phone_call('10086')
     #p.send_sms('10086')
     #print p.wait_for_logcat("Exception")

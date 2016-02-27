@@ -7,6 +7,7 @@ help__()
   echo " -p <PartnerPhone>      - Partner phone adb device serial"
   echo " -n <MasterPhoneNumber> - Master phone number, using by call handling"
   echo " [-r <round>]           - Round of testing, default is round=1 "
+  echo " [ -d report folder]     - report folder, default is device name"   
   echo " -t <tag>  default is MTBF"
   echo ""
   echo " Example:"
@@ -16,9 +17,15 @@ help__()
   exit 1
 }
 
+upload()
+{
+    echo
+}
+
 LOGINFOMATION=0
 RunTag=MTBF
-while getopts m:p:n:r:t:Ih opt
+REPORTS=''
+while getopts m:p:n:r:t:d:Ih opt
 do
   case "${opt}" in
     m) MUT1=${OPTARG};;
@@ -26,6 +33,7 @@ do
     n) PHONE=${OPTARG};;
     r) ROUND=${OPTARG};;
     t) RunTag=${OPTARG};;
+    d) REPORTS=${OPTARG};;
     I) LOGINFOMATION=1;;
     h) help__;;
     \?) help__;;
@@ -41,6 +49,9 @@ if [ -z "$ROUND" ]; then
     ROUND=1
 fi
 
+if [ -z "$REPORTS" ]; then
+    REPORTS=$MUT1
+fi
 if [ $LOGINFOMATION -eq 1 ]; then
     LOG_INFO="--loglevel TRACE"
 fi
@@ -57,8 +68,8 @@ adb -s $MUT1 remount
 
 
 #### Log Starts #########
-mkdir Reports
-adb -s $MUT1 logcat -v time -b main > Reports/main_log.txt &
+mkdir ${REPORTS}
+adb -s $MUT1 logcat -v time -b main > ${REPORTS}/main_log.txt &
 
 #######################
 #   Run Test Case     #
@@ -68,13 +79,13 @@ for((index=1;index<=$ROUND;index++))
     CREATED_TIME=`date +%F_%H%M%S`
     echo ${CREATED_TIME} "###Run Test Case for Round #$index"
     echo "========================================"
-    pybot $LOG_INFO --include=MTBF -d Reports/stability_report_${CREATED_TIME} --variable MUT1:$MUT1 StabilityKPI
+    pybot $LOG_INFO --include=${RunTag} -d ${REPORTS}/stability_report_${CREATED_TIME} --variable MUT1:$MUT1 StabilityKPI
 }
 
 ############End of Logcat ###########
 for logcatPID in `adb -s $MASTER shell ps -x | grep logcat | awk '{print $2}'`
 do
-    adb -s $MASTER shell kill $logcatPID
+    adb -s $MUT1 shell kill $logcatPID
 done
 
 
@@ -82,11 +93,11 @@ done
 #######################
 #   Generate Report   #
 #######################
-REPORTS=
-cd Reports
+RobotsReports=
+cd ${REPORTS}
 for d in `find . -name "output.xml" -print`
 {
-    REPORTS="$REPORTS $d "
+    RobotsReports="$REPORTS $d "
 }
 
-rebot --name StablityKPI -x result.xml ${REPORTS}
+rebot --name StablityKPI -x result.xml ${RobotsReports}

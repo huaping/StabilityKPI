@@ -20,20 +20,27 @@ ${round_alarm}    5
 ${round_streaming}    2
 ${round_wifi}     20
 ${round_multitask}    30
+${uptime}         0
 
 *** Keywords ***
 Suite Setup
+    ${uptime}    MUT1.Get Uptime
+    Should Be True    ${uptime} != -1    System shutdown
     MUT1.Crash Watchers
 
 Suite Teardown
 
 Testcase Setup
+    ${uptime}    MUT1.Get Uptime
+    Should Be True    ${uptime} != -1    System shutdown
     Log    test start...
     Goto Home
 
 Testcase Teardown
     Run Keyword If Test Failed    MUT1.Take Screenshot    0.3    70
     Goto Home
+    ${finishTime}    MUT1.Get Uptime
+    Should Be True    ${finishTime} > ${uptime}    During test System shutdown
 
 GoTo Home
     MUT1.Goto Home

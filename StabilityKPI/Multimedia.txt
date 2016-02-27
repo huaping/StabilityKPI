@@ -7,6 +7,7 @@ Resource          Resources/Common.txt
 *** Test Cases ***
 MTBF-019 Voice Recording, Play and Delete
     [Tags]    MTBF
+    [Timeout]    2 minutes 50 seconds
     : FOR    ${index}    IN RANGE    ${round_voice}
     \    Open Recorder App
     \    Delete Recorded files
@@ -27,6 +28,7 @@ MTBF-021 Open Music player, playing, close
 
 MTBF-022 Capture Video
     [Tags]    MTBF
+    [Timeout]    5 minutes
     : FOR    ${index}    IN RANGE    ${round_capVideo}
     \    Open Camera
     \    Capture Photo Or Video    video
@@ -35,6 +37,7 @@ MTBF-022 Capture Video
 
 MTBF-023 Capture photo
     [Tags]    MTBF
+    [Timeout]    10 minutes
     : FOR    ${index}    IN RANGE    ${round_capPhoto}
     \    Open Camera
     \    Capture Photo Or Video    still

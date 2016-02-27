@@ -277,6 +277,12 @@ class UiKpiTest(UiTestLib):
             if downList:
                 self.wait_for_ui_exists(int(timeout), textContains=fileName)
                 self.click_ui(textContains=fileName)
+                print time.time()
+                if self.open_with('HTML Viewer'):
+                    print "HTML viewer"
+                elif self.open_with('VideoPlayer'):
+                    print "video player"
+                print time.time()
                 return True
             else:
                 return False
@@ -288,19 +294,37 @@ class UiKpiTest(UiTestLib):
     def verify_open(self, appName, **selectors):
         """Verify intent open files, try to use appName to open and verify **selectors"""
         try:
-            if self.wait_for_ui_exists(800, textContains='Open with'):
-                if self.wait_for_ui_exists(300, text=appName):
-                    self.click_text(appName)
-                time.sleep(2)
-                if self.wait_for_ui_exists(500, resourceId='android:id/button_once'):
-                    self.click_id('android:id/button_once')
-            return self.wait_for_ui_exists(8000, **selectors)
+            self.open_with(appName)
+            return self.wait_for_ui_exists(3000, **selectors)
         except Exception, e:
             print Exception, ":", e
             self.logmsg("Verified Failed")
             return False
+    
+    def open_with(self, appName):
+        """popup Open with  *appName"""
+        print 'open with %s' % appName
+        try:
+            if self.wait_for_ui_exists(300, textContains="Open with"):
+                if self.d(resourceId='android:id/button_once').enabled:
+                    self.click_id('android:id/button_once')
+                    return True
+                if self.wait_for_ui_exists(300, text=appName):
+                    self.click_text(appName)
+                else:
+                    return False
+                time.sleep(1)
+                if self.wait_for_ui_exists(500, resourceId='android:id/button_once'):
+                    self.click_id('android:id/button_once')
+                    return True
+            else:
+                return True
+        except Exception, e:
+            print Exception, ":", e
+            self.logmsg("open_with Failed")
+            return False
 
-    def delete_file_in_downloads(self, fileName):
+    def delete_file_in_downloads(self, fileName, delete_all='False'):
         try:
             self.open_application('com.android.providers.downloads.ui/.DownloadList')
             if self.wait_for_ui_exists(300, text='No items'):
@@ -308,6 +332,15 @@ class UiKpiTest(UiTestLib):
                 return True
             downList = self.wait_for_ui_exists(2000, resourceId='com.android.documentsui:id/toolbar')
             print downList
+            if delete_all=='True':
+                trytime=10
+                while trytime>0:
+                    if self.wait_for_ui_exists(300, resourceIdMatches='.*icon_mime'):
+                        self.long_click_ui(resourceIdMatches='.*icon_mime')
+                        self.click_ui(description='More options')  #delete button
+                    if self.wait_for_ui_exists(300, text='No items'):
+                        return True
+                    trytime = trytime - 1
             if downList:
                 self.wait_for_ui_exists(800, textContains=fileName)
                 self.long_click_ui(textContains=fileName)
@@ -322,12 +355,17 @@ class UiKpiTest(UiTestLib):
     
     def download_save_file(self, timeout):
         """Precondition: On Download settings UI, press OK to download"""
-        status = self.wait_for_ui_exists(int(timeout), text="Download settings")
+        status = self.wait_for_ui_exists(int(timeout), resourceIdMatches=".*download_settings_title")
         if not status:
             print "timeout %s when download file" % timeout
             return False
-        self.click_text('OK')
-        return True
+        if self.wait_for_ui_exists(3000, resourceIdMatches='.*download_start'):
+            self.click_ui(resourceIdMatches='.*download_start')
+            if self.wait_for_ui_exists(500, textContains='File already exists'):
+                self.click_text('OK')
+            return True
+        else:
+            return False
         
     def refesh_page(self):
         if not self.wait_for_ui_exists(2000, resourceIdMatches='.*more_browser_settings'):
@@ -389,18 +427,21 @@ class UiKpiTest(UiTestLib):
                 pass
             elif uiStatus == 3:
                 self.press_key('back')
+            elif uiStatus == 4:
+                pass
             else:
                 return False
-            if self.wait_for_ui_exists(1000, text='there is no file'):
+            if self.wait_for_ui_exists(1000, text='The recording file is empty'):
                 self.logmsg('There is no files to delete')
                 return True
             self.click_ui(description='More options')  #more button
             self.click_text('delete')
             self.click_id(ckb)
-            self.click_id(deleteBtn)
+            time.sleep(0.2)
+            self.click_text('delete')
             self.click_id('android:id/button1')
             time.sleep(0.2)
-            return not self.wait_for_ui_exists(1000, textMatches="Voice\d+\..*")
+            return not self.wait_for_ui_exists(1000, textMatches=".*\d{8}\d+\..*")
         except Exception, e:
             print Exception, ":", e
             self.logmsg('Delete failed.')
@@ -410,7 +451,9 @@ class UiKpiTest(UiTestLib):
         """return status 0, 1, 2, 3
         0  --- main window
         1   -- saved recordings window
-        2   -- Select voice recordings
+        2   -- search window
+        3   --- Select voice recordings
+        4   --- play record window
         """
         if self.wait_for_ui_exists(300, text='Sound Recorder'):
             return 0
@@ -418,6 +461,8 @@ class UiKpiTest(UiTestLib):
             return 1
         elif self.wait_for_ui_exists(300, text='Select voice recordings'):
             return 3
+        elif self.wait_for_ui_exists(200, resourceIdMatches='.*seekBar'):
+            return 4
         elif self.wait_for_ui_exists(300, resourceIdMatches='.*/search_text'):
             return 2
 
@@ -448,7 +493,7 @@ class UiKpiTest(UiTestLib):
              time.sleep(int(duration))
              self.click_ui(resourceIdMatches='.*btn_recorder_home_recording')
              time.sleep(1)
-             return self.wait_for_ui_exists(1000, textMatches="Voice\d+\..*")
+             return self.wait_for_ui_exists(1000, textMatches=".*\d{8}\d+\..*")
 
          except Exception, e:
              print Exception, ":", e
@@ -543,6 +588,8 @@ class UiKpiTest(UiTestLib):
             if self.wait_for_ui_exists(300, resourceIdMatches='.*shutter_button'):
                 return True
             self.open_application('org.codeaurora.snapcam/com.android.camera.CameraLauncher')
+            if self.wait_for_ui_exists(200, textContains="Remember photo location"):
+                self.click_text('Yes')
             return self.wait_for_ui_exists(8000, resourceIdMatches='.*shutter_button')
         except Exception, e:
             print Exception, ":", e
@@ -583,7 +630,10 @@ class UiKpiTest(UiTestLib):
             return False
 
     def capture_picture_video(self, mode, duration=60):
-        """"""
+        """Capture video/picture
+        mode = still    is for photo
+        mode = video    is for video
+        """
         try:
 
             if mode=='still':
@@ -596,6 +646,7 @@ class UiKpiTest(UiTestLib):
                 self.click_ui(resourceIdMatches='.*shutter_button')
                 time.sleep(int(duration))
                 self.click_ui(resourceIdMatches='.*shutter_button')
+                return True
             else:
                 self.logmsg('cannot switch to still mode')
                 return False
@@ -1035,10 +1086,15 @@ if __name__ == "__main__":
     import sys
     #p = UiKpiTest('ec8fc2f1')
     p = UiKpiTest('ec88c23e')
-    print p.dial_number('10086')
-    print p.background_call()
-    time.sleep(5)
-    print p.end_call()
+    print p.open_download_file('')
+    #p.open_browser_app()
+    #p.open_page('http://192.168.99.188/download.php?file=text.txt')
+    #print p.download_save_file(3000)
+    #print p.open_camera_app()
+    #~ print p.dial_number('10086')
+    #~ print p.background_call()
+    #~ time.sleep(5)
+    #~ print p.end_call()
     #~ print p.open_wifi('on')
     #~ print p.open_wifi('off')
     #~ print p.open_wifi('on')

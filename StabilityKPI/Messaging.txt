@@ -32,10 +32,12 @@ MTBF_007 Open MMS
 
 MTBF-008 Send Email Without Attachment
     [Tags]    MTBF
+    [Timeout]    3 minutes
     Open Email App
     Delete All Sent Emails
     Email Navigation    Inbox
-    Forward Email    This is a mail
+    Forward Email    This is a mail    phqi@sina.com
+    Goto Home
     Check Sentbox NOT Empty
 
 MTBF-009 Sent Email With Attachment
@@ -43,5 +45,6 @@ MTBF-009 Sent Email With Attachment
     Open Email App
     Delete All Sent Emails
     Email Navigation    Inbox
-    Forward Email    attachment test
+    Forward Email    attachment test    phqi@sina.com
+    Goto Home
     Check Sentbox NOT Empty

@@ -18,24 +18,28 @@ Open Page
     Should Be True    ${result}    open page failed
 
 Delete File in Downloads
-    [Arguments]    ${file}
-    ${result}    MUT1.delete_file_in_downloads    ${file}
+    [Arguments]    ${file}    ${delete_all}=False
+    Log    Delete file in downloads list
+    ${result}    MUT1.Delete File In Downloads    ${file}    delete_all=${delete_all}
     Should be True    ${result}    Delete ${file} Failed
 
 Open Download file
     [Arguments]    ${file}
-    ${result}    MUT1.open_download_file    ${file}    timeout=20000
+    Log    open download file:${file}
+    ${result}    MUT1.open_download_file    ${file}    timeout=1000
     Should be True    ${result}    Open ${file} Failed
 
 Download File
     [Arguments]    ${filename}
+    Log    Download file:${filename}
     MUT1.Open Browser App
-    ${result}    Open Page    http://192.168.99.188/textdownload.php?file=${filename}
-    ${download}    MUT1.download save file    10000
+    MUT1.Open Page    http://192.168.99.188/download.php?file=${filename}
+    ${download}    MUT1.download save file    3000
     Should be true    ${download}    Download ${filename} failed
 
 Open Link and Verify
     [Arguments]    ${link}    ${verify}
+    Log    verify ${link}
     ${result}    MUT1.Open Page    url=${link}
     MUT1.click_at_coordinates    400    400
     ${result}    MUT1.Wait For Ui Exists    4000    textContains=${verify}
@@ -43,8 +47,10 @@ Open Link and Verify
 
 Open Streaming Link
     [Arguments]    ${link}
+    Log    Streaming test
     ${result}    MUT1.Open Page    url=${link}
     ${result}    MUT1.verify_open    VideoPlayer    packageName=com.cloudminds.video
+    Sleep    10s
     #Should Be True    ${result}    Open LINK ${verify} failed
 
 Open Wifi
@@ -53,4 +59,5 @@ Open Wifi
     Should Be True    ${result}    Open Wifi ${mode} Failed
 
 Refresh page
+    Log    refresh pages
     MUT1.Refesh Page

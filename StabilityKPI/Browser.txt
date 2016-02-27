@@ -7,6 +7,7 @@ Resource          Resources/Common.txt
 *** Test Cases ***
 MTBF-011_Browser_Open_Specific_Website
     [Tags]    MTBF
+    [Timeout]    2 minutes 30 seconds
     : FOR    ${index}    IN RANGE    ${round_browser}
     \    Open Browser
     \    Clear Browser Privacy
@@ -15,36 +16,44 @@ MTBF-011_Browser_Open_Specific_Website
 
 MTBF-012 Download a text file
     [Tags]    MTBF
+    [Timeout]    8 minutes
     : FOR    ${index}    IN RANGE    ${round_download}
-    \    Delete File in Downloads    text.txt
+    \    Delete File in Downloads    text.txt    True
     \    Download File    text.txt
+    \    Sleep    3s    sleep for download file
     \    Open Download file    text.txt
     \    Goto Home
     \    Delete File in Downloads    text.txt
 
 MTBF-014_Download a picture
     [Tags]    MTBF
+    [Timeout]    8 minutes
     : FOR    ${index}    IN RANGE    ${round_download}
-    \    Delete File in Downloads    picturedownload.jpg
+    \    Delete File in Downloads    picturedownload.jpg    True
     \    Download File    picturedownload.jpg
+    \    Sleep    5s
     \    Open Download file    picturedownload.jpg
     \    Goto Home
     \    Delete File in Downloads    picturedownload.jpg
 
 MTBF-013_Download music file
     [Tags]    MTBF
+    [Timeout]    13 minutes
     : FOR    ${index}    IN RANGE    ${round_download}
-    \    Delete File in Downloads    musicdownload.mp3
+    \    Delete File in Downloads    musicdownload.mp3    True
     \    Download File    musicdownload.mp3
+    \    Sleep    5s
     \    Open Download file    musicdownload.mp3
     \    Goto Home
     \    Delete File in Downloads    musicdownload.mp3
 
 MTBF-015_Download a Video file
     [Tags]    MTBF
+    [Timeout]    20 minutes
     : FOR    ${index}    IN RANGE    ${round_download}
-    \    Delete File in Downloads    moviedownload.mp4
+    \    Delete File in Downloads    moviedownload.mp4    True
     \    Download File    moviedownload.mp4
+    \    Sleep    15s
     \    Open Download file    moviedownload.mp4
     \    Goto Home
     \    Delete File in Downloads    moviedownload.mp4

@@ -12,12 +12,14 @@ Delete Recorded files
 Record 5 seconds Voice
     ${result}    MUT1.Record Voice    5
     Should Be True    ${result}    Record voice failed
+    Sleep    5s
 
 Play Recorded Files
     MUT1.Play Recorded Voice
 
 Open Music Player
-    MUT1.Open Music App
+    ${result}    MUT1.Open Music App
+    Should Be true    ${result}    Open music failed.
 
 Play Music Shuffle
     MUT1.Play Music Shuffle All
@@ -37,7 +39,8 @@ Play Music Next 20 times
     \    Play Next Music    7
 
 Open Camera
-    MUT1.Open Camera App
+    ${result}    MUT1.Open Camera App
+    Should Be True    ${result}
 
 Capture Photo Or Video
     [Arguments]    ${mode}

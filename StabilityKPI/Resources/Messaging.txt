@@ -23,7 +23,8 @@ Play SlideShow
     MUT1.Play Slideshow MMS
 
 Open Email App
-    MUT1.Open Email App
+    ${result}    MUT1.Open Email App
+    Should Be True    ${result}    Open email app failed
 
 Email Navigation
     [Arguments]    ${whichbox}
@@ -37,15 +38,15 @@ Email Goto mainUI
     MUT1.Email goto main
 
 Check Sentbox not Empty
-    Email Goto MainUI
+    Open Email App
     Email navigation    Sent
     ${result}    MUT1.Check Sentbox Not Empty
     Should Be True    ${result}
 
 Forward Email
-    [Arguments]    ${title}
+    [Arguments]    ${title}    ${emailAdrr}
     Open Email With Title    ${title}
-    ${result}    MUT1.Forward Email    ${title}
+    ${result}    MUT1.Forward Email    ${emailAdrr}
     Should Be True    ${result}    Forward email failed
 
 Open Email With Title

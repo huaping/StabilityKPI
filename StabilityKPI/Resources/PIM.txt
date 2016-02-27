@@ -3,7 +3,8 @@ Library           ../UiKpiTest.py    ${MUT1}    WITH NAME    MUT1
 
 *** Keywords ***
 Open Callendar App
-    MUT1.Open Callendar App
+    ${result}    MUT1.Open Callendar App
+    Should Be True    ${result}    Open calendar app failed
 
 Create Callendar Events
     [Arguments]    ${title}
