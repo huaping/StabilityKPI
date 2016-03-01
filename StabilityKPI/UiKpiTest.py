@@ -275,7 +275,8 @@ class UiKpiTest(UiTestLib):
             self.open_application('com.android.providers.downloads.ui/.DownloadList')
             downList = self.wait_for_ui_exists(1000, resourceId='com.android.documentsui:id/toolbar')
             if downList:
-                self.wait_for_ui_exists(int(timeout), textContains=fileName)
+                if not self.wait_for_ui_exists(int(timeout), textContains=fileName):
+                    return False
                 self.click_ui(textContains=fileName)
                 print time.time()
                 if self.open_with('HTML Viewer'):
