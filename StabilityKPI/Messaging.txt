@@ -7,6 +7,7 @@ Resource          Resources/Messaging.txt
 *** Test Cases ***
 MTBF_004_5_Open SMS and Forward SMS
     [Tags]    MTBF
+    [Timeout]    10 minutes
     : FOR    ${index}    IN RANGE    ${round_sms}
     \    Open Messaging App
     \    Open Message by Content    SMS content
@@ -15,6 +16,7 @@ MTBF_004_5_Open SMS and Forward SMS
 
 MTBF_006 Forward MMS and Delete Sent
     [Tags]    MTBF
+    [Timeout]    10 minutes
     : FOR    ${index}    IN RANGE    ${round_send_mms}
     \    Open Messaging App
     \    Open Message by Content    This is MMS
@@ -24,6 +26,7 @@ MTBF_006 Forward MMS and Delete Sent
 
 MTBF_007 Open MMS
     [Tags]    MTBF
+    [Timeout]    10 minutes
     : FOR    ${index}    IN RANGE    ${round_openMMS}
     \    Open Messaging App
     \    Open Message by Content    This is MMS
@@ -32,7 +35,7 @@ MTBF_007 Open MMS
 
 MTBF-008 Send Email Without Attachment
     [Tags]    MTBF
-    [Timeout]    3 minutes
+    [Timeout]    4 minutes
     Open Email App
     Delete All Sent Emails
     Email Navigation    Inbox
@@ -42,6 +45,7 @@ MTBF-008 Send Email Without Attachment
 
 MTBF-009 Sent Email With Attachment
     [Tags]    MTBF
+    [Timeout]    4 minutes
     Open Email App
     Delete All Sent Emails
     Email Navigation    Inbox

@@ -17,6 +17,7 @@ MTBF-019 Voice Recording, Play and Delete
 
 MTBF-021 Open Music player, playing, close
     [Tags]    MTBF
+    [Timeout]    10 minutes
     : FOR    ${index}    IN RANGE    ${round_music}
     \    Open Music Player
     \    Play Music Shuffle

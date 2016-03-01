@@ -16,7 +16,7 @@ MTBF-011_Browser_Open_Specific_Website
 
 MTBF-012 Download a text file
     [Tags]    MTBF
-    [Timeout]    8 minutes
+    [Timeout]    6 minutes
     : FOR    ${index}    IN RANGE    ${round_download}
     \    Delete File in Downloads    text.txt    True
     \    Download File    text.txt
@@ -27,7 +27,7 @@ MTBF-012 Download a text file
 
 MTBF-014_Download a picture
     [Tags]    MTBF
-    [Timeout]    8 minutes
+    [Timeout]    6 minutes
     : FOR    ${index}    IN RANGE    ${round_download}
     \    Delete File in Downloads    picturedownload.jpg    True
     \    Download File    picturedownload.jpg
@@ -38,7 +38,7 @@ MTBF-014_Download a picture
 
 MTBF-013_Download music file
     [Tags]    MTBF
-    [Timeout]    13 minutes
+    [Timeout]    10 minutes
     : FOR    ${index}    IN RANGE    ${round_download}
     \    Delete File in Downloads    musicdownload.mp3    True
     \    Download File    musicdownload.mp3
@@ -49,7 +49,7 @@ MTBF-013_Download music file
 
 MTBF-015_Download a Video file
     [Tags]    MTBF
-    [Timeout]    20 minutes
+    [Timeout]    15 minutes
     : FOR    ${index}    IN RANGE    ${round_download}
     \    Delete File in Downloads    moviedownload.mp4    True
     \    Download File    moviedownload.mp4
@@ -60,6 +60,7 @@ MTBF-015_Download a Video file
 
 MTBF-016_Browser_Open_Link
     [Tags]    MTBF
+    [Timeout]    10 minutes
     : FOR    ${index}    IN RANGE    ${round_browser}
     \    Open Browser
     \    Clear Browser Privacy
@@ -68,6 +69,7 @@ MTBF-016_Browser_Open_Link
 
 MTBF-020 Streaming Test
     [Tags]    MTBF
+    [Timeout]    10 minutes
     Open Browser
     #Clear Browser Privacy
     Open Streaming Link    rtsp://121.41.73.249/1001_home.sdp

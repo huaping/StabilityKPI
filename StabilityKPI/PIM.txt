@@ -1,4 +1,6 @@
 *** Settings ***
+Test Setup        Testcase Setup
+Test Teardown     Testcase Teardown
 Resource          Resources/Phonebook.txt
 Resource          Resources/Common.txt
 Resource          Resources/PIM.txt
@@ -6,12 +8,14 @@ Resource          Resources/PIM.txt
 *** Test Cases ***
 MTBF-002_Add and Delete Contact
     [Tags]    MTBF
+    [Timeout]    10 minutes
     : FOR    ${i}    IN RANGE    ${round_Pb}
     \    Create New Contact
     \    Delete Contact
 
 MTBF-017 Callendar Events
     [Tags]    MTBF
+    [Timeout]    10 minutes
     : FOR    ${index}    IN RANGE    ${round_callendar}
     \    Open Callendar App
     \    Create Callendar Events    This is Callendar events
@@ -20,7 +24,8 @@ MTBF-017 Callendar Events
 
 MTBF-018 Add Alarm and Delete
     [Tags]    MTBF
-    :FOR    ${index}    IN RANGE    ${round_alarm}
+    [Timeout]    10 minutes
+    : FOR    ${index}    IN RANGE    ${round_alarm}
     \    Open Alarm Application
     \    Delete All Alarms
     \    Add Alarm
