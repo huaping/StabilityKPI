@@ -33,7 +33,7 @@ Download File
     [Arguments]    ${filename}
     Log    Download file:${filename}
     MUT1.Open Browser App
-    MUT1.Open Page    http://192.168.99.188/download.php?file=${filename}
+    MUT1.Open Page    http://10.11.32.237/download.php?file=${filename}
     ${download}    MUT1.download save file    3000
     Should be true    ${download}    Download ${filename} failed
 

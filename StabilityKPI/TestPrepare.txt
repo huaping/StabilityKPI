@@ -6,3 +6,7 @@ Email_account_prepare
     [Tags]    Prepare
     ${result}    MUT1.Setup Email Account
     Should be true    ${result}
+
+Restore
+    [Tags]    Prepare
+    MUT1.Restore Phone

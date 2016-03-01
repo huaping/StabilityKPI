@@ -10,16 +10,16 @@ MTBF_004_5_Open SMS and Forward SMS
     : FOR    ${index}    IN RANGE    ${round_sms}
     \    Open Messaging App
     \    Open Message by Content    SMS content
-    \    Forward Message    13910573271    SMS content
-    \    Delete Message By Contact Name    3271
+    \    Forward Message    13466745997    SMS content
+    \    Delete Message By Contact Name    5997
 
 MTBF_006 Forward MMS and Delete Sent
     [Tags]    MTBF
     : FOR    ${index}    IN RANGE    ${round_send_mms}
     \    Open Messaging App
     \    Open Message by Content    This is MMS
-    \    Forward Message    13910573271    This is MMS    True
-    \    Delete Message By Contact Name    3271
+    \    Forward Message    13466745997    This is MMS    True
+    \    Delete Message By Contact Name    5997
     \    Goto Home
 
 MTBF_007 Open MMS

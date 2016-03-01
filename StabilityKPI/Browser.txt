@@ -63,7 +63,7 @@ MTBF-016_Browser_Open_Link
     : FOR    ${index}    IN RANGE    ${round_browser}
     \    Open Browser
     \    Clear Browser Privacy
-    \    Open Link and Verify    http://192.168.99.188/openlink.html    xw.qq.com
+    \    Open Link and Verify    http://10.11.32.237/openlink.html    xw.qq.com
     \    Close Browser
 
 MTBF-020 Streaming Test
@@ -71,5 +71,5 @@ MTBF-020 Streaming Test
     Open Browser
     #Clear Browser Privacy
     Open Streaming Link    rtsp://121.41.73.249/1001_home.sdp
-    Sleep    5s
+    Sleep    10s
     Goto Home

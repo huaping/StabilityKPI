@@ -106,14 +106,14 @@ class UiKpiTest(UiTestLib):
             print Exception, ":", e
             print "Exception happens"
             return False
-    
+
     def end_call(self):
         """press end call key"""
         status = self.get_call_status()
         if status == '2':
             self.logmsg("End call because it in calling")
             self.press_key('6')   #end call key
-                
+
     ##################################
     #
     #       Messaging
@@ -300,7 +300,7 @@ class UiKpiTest(UiTestLib):
             print Exception, ":", e
             self.logmsg("Verified Failed")
             return False
-    
+
     def open_with(self, appName):
         """popup Open with  *appName"""
         print 'open with %s' % appName
@@ -352,7 +352,7 @@ class UiKpiTest(UiTestLib):
             print Exception, ":", e
             self.logmsg('delete failed.')
             return False
-    
+
     def download_save_file(self, timeout):
         """Precondition: On Download settings UI, press OK to download"""
         status = self.wait_for_ui_exists(int(timeout), resourceIdMatches=".*download_settings_title")
@@ -366,7 +366,7 @@ class UiKpiTest(UiTestLib):
             return True
         else:
             return False
-        
+
     def refesh_page(self):
         if not self.wait_for_ui_exists(2000, resourceIdMatches='.*more_browser_settings'):
             return False
@@ -820,12 +820,12 @@ class UiKpiTest(UiTestLib):
         else:
             self.press_key('back')
         return self.wait_for_ui_exists(300, resourceIdMatches='.*action_today')
-    
+
     def open_alarm_app(self):
         """Open alarm application"""
         self.open_application('com.android.deskclock/.DeskClock')
         return self.wait_for_ui_exists(1000, packageName='com.android.deskclock')
-        
+
     def clock_open(self, mode):
         """
         mode = alarm
@@ -855,7 +855,7 @@ class UiKpiTest(UiTestLib):
             return self.wait_for_ui_exists(1000, resourceIdMatches='.*stopwatch_time_text')
         else:
             return False
-    
+
     def delete_all_alarms(self):
         """delete all alarms"""
         try:
@@ -869,7 +869,7 @@ class UiKpiTest(UiTestLib):
         except Exception, e:
             print Exception, ':', e
             return False
-            
+
     def add_default_alarm(self):
         try:
             if not self.wait_for_ui_exists(1000, resourceId='com.android.deskclock:id/fab'):
@@ -953,8 +953,8 @@ class UiKpiTest(UiTestLib):
     def forward_email(self, email_addr):
         # on an openned message
         try:
-            #com.android.email:id/forward_button
-            self.click_ui(resourceIdMatches='.*forward_button')
+            self.click_ui(resourceIdMatches='.*overflow')
+            self.click_text('Forward')
             if not self.wait_for_ui_exists(1000, textStartsWith='Fwd:'):
                 return False
             self.type_text(email_addr, resourceId='com.android.email:id/to')
@@ -1004,7 +1004,7 @@ class UiKpiTest(UiTestLib):
         false is empty
         """
         return not self.wait_for_ui_exists(500, resourceIdMatches='.*empty_view')
-        
+
     def setup_email_account(self, username='cloudminds001@sina.com', password='q111111'):
         if self.open_email_app():
             self.logmsg("already exits")
@@ -1034,9 +1034,9 @@ class UiKpiTest(UiTestLib):
                 time.sleep(3)
             else:
                 return False
-                
+
             return self.wait_for_ui_exists(3000, resourceIdMatches='.*conversation_list_view')
-            
+
     def prepare_log_tool(self, operation=None):
         self.open_application('com.android.logtool/.LogTool')
         if not self.wait_for_ui_exists(2000, packageName='com.android.logtool'):
@@ -1054,13 +1054,13 @@ class UiKpiTest(UiTestLib):
             self.click_ui(resourceIdMatches='.*check_crash')
         if not self.d(resourceIdMatches='.*check_kernel').checked:
             self.click_ui(resourceIdMatches='.*check_kernel')
-        
+
         if operation == 'clean':
             self.click_id('com.android.logtool:id/bt_clean')
         elif operation == 'save':
             self.click_id('com.android.logtool:id/bt_pack')
             time.sleep(10)
-            
+
     def open_wifi(self, mode):
         """
         on -- open wifi on
@@ -1082,11 +1082,27 @@ class UiKpiTest(UiTestLib):
         else:
             print "please confirm you set parameter on or off"
             return False
+
+
+    def restore_phone(self ):
+        try:
+            self.open_application('com.android.backup/.MainBackUpActivity')
+            self.click_text('Restore')
+            self.click_text('System data')
+            self.click_ui(textMatches='\d+.*')
+            self.click_ui(resourceIdMatches='.*recovery_btn')
+            time.sleep(3)
+            return True
+        except Exception, e:
+            print Exception, ':', e
+            return False
+
 if __name__ == "__main__":
     import sys
     #p = UiKpiTest('ec8fc2f1')
-    p = UiKpiTest('ec88c23e')
-    print p.open_download_file('')
+    p = UiKpiTest('ec8fc231')
+    p.restore_phone()
+    #print p.open_download_file('')
     #p.open_browser_app()
     #p.open_page('http://192.168.99.188/download.php?file=text.txt')
     #print p.download_save_file(3000)
@@ -1104,8 +1120,8 @@ if __name__ == "__main__":
     #~ print p.open_wifi('on')
     #~ print p.open_wifi('off')
     #~ print p.open_wifi('on')
-    
-    
+
+
     #~ print p.delete_all_alarms()
     #~ print p.add_default_alarm()
     #~ print p.delete_all_alarms()
