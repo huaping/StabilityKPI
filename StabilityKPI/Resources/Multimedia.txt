@@ -3,53 +3,67 @@ Library           ../UiKpiTest.py    ${MUT1}    WITH NAME    MUT1
 
 *** Keywords ***
 Open Recorder App
+    [Timeout]    1 minute
     ${result}    MUT1.Open Recorder App
     #Should Be True    ${result}    Open recorder failed
 
 Delete Recorded files
+    [Timeout]    2 minutes
     MUT1.Delete Record Files
 
 Record 5 seconds Voice
+    [Timeout]    1 minute
     ${result}    MUT1.Record Voice    5
     #Should Be True    ${result}    Record voice failed
     Sleep    5s
 
 Play Recorded Files
+    [Timeout]    2 minutes
     MUT1.Play Recorded Voice
 
 Open Music Player
+    [Timeout]    1 minute
     ${result}    MUT1.Open Music App
     #Should Be true    ${result}    Open music failed.
 
 Play Music Shuffle
+    [Timeout]    1 minute
     MUT1.Play Music Shuffle All
 
 Open Ongoing music
+    [Timeout]    1 minute
     MUT1.Open Ongoing Music
 
 Play Next Music
     [Arguments]    ${duration}
+    [Timeout]    1 minute
     MUT1.Play Next Music    ${duration}
 
 Stop Music Playing
+    [Timeout]    1 minute
     MUT1.Pause music playing
 
 Play Music Next 20 times
+    [Timeout]    3 minutes
     : FOR    ${i}    IN RANGE    20
     \    Play Next Music    7
 
 Open Camera
+    [Timeout]    1 minute
     ${result}    MUT1.Open Camera App
     #Should Be True    ${result}
 
 Capture Photo Or Video
     [Arguments]    ${mode}
+    [Timeout]    1 minute
     ${result}    MUT1.Capture Picture Video    ${mode}
     #Should Be True    ${result}    Capture picture/video failed
 
 Open File from Camera and Delete
+    [Timeout]    1 minute
     MUT1.Open file From Camera    True
 
 Capture button
+    [Timeout]    1 minute
     MUT1.Click UI    resourceIdMatches=.*shutter_button
     Sleep    1s

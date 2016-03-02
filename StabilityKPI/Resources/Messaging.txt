@@ -3,41 +3,51 @@ Library           ../UiKpiTest.py    ${MUT1}    WITH NAME    MUT1
 
 *** Keywords ***
 Open Messaging App
+    [Timeout]    30 seconds
     ${result}    MUT1.Open Message App
     #Should be true    ${result}    open mms failed
 
 Open Message by Content
     [Arguments]    ${content}
+    [Timeout]    1 minute
     MUT1.Open Message    ${content}
 
 Forward Message
     [Arguments]    ${phoneNum}    ${content}    ${mms}=False
+    [Timeout]    2 minutes
     ${result}    MUT1.Forward Message    ${phoneNum}    ${content}    ${mms}
     #Should be true    ${result}    Forward msg failed
 
 Delete Message By Contact Name
     [Arguments]    ${contact}
+    [Timeout]    2 minutes
     MUT1.Delete Msg By PhoneNum    ${contact}
 
 Play SlideShow
+    [Timeout]    2 minutes
     MUT1.Play Slideshow MMS
 
 Open Email App
+    [Timeout]    1 minute
     ${result}    MUT1.Open Email App
     #Should Be True    ${result}    Open email app failed
 
 Email Navigation
     [Arguments]    ${whichbox}
+    [Timeout]    1 minute
     MUT1.Email Navigation    ${whichbox}
 
 Delete All Sent Emails
+    [Timeout]    1 minute
     Email Navigation    Sent
     MUT1.Delete All Sent Mails
 
 Email Goto mainUI
+    [Timeout]    1 minute
     MUT1.Email goto main
 
 Check Sentbox not Empty
+    [Timeout]    1 minute
     Open Email App
     Email navigation    Sent
     ${result}    MUT1.Check Sentbox Not Empty
@@ -45,10 +55,12 @@ Check Sentbox not Empty
 
 Forward Email
     [Arguments]    ${title}    ${emailAdrr}
+    [Timeout]    1 minute
     Open Email With Title    ${title}
     ${result}    MUT1.Forward Email    ${emailAdrr}
     #Should Be True    ${result}    Forward email failed
 
 Open Email With Title
     [Arguments]    ${title}
+    [Timeout]    1 minute
     MUT1.Open Email Subject    ${title}
