@@ -7,7 +7,7 @@ help__()
   echo " -p <PartnerPhone>      - Partner phone adb device serial"
   echo " -n <MasterPhoneNumber> - Master phone number, using by call handling"
   echo " [-r <round>]           - Round of testing, default is round=1 "
-  echo " [ -d report folder]     - report folder, default is device name"   
+  echo " [ -d report folder]     - report folder, default is device name"
   echo " -t <tag>  default is MTBF"
   echo ""
   echo " Example:"
@@ -40,7 +40,7 @@ do
   esac
 done
 #####Parameters checking #########
-if [[ -z "$MUT1" ]] 
+if [[ -z "$MUT1" ]]
 then
     help__
 fi
@@ -83,7 +83,7 @@ for((index=1;index<=$ROUND;index++))
 }
 
 ############End of Logcat ###########
-for logcatPID in `adb -s $MASTER shell ps -x | grep logcat | awk '{print $2}'`
+for logcatPID in `adb -s $MUT1 shell ps -x | grep logcat | awk '{print $2}'`
 do
     adb -s $MUT1 shell kill $logcatPID
 done
@@ -97,7 +97,7 @@ RobotsReports=
 cd ${REPORTS}
 for d in `find . -name "output.xml" -print`
 {
-    RobotsReports="$REPORTS $d "
+    RobotsReports="$RobotsReports $d "
 }
 
-rebot --name StablityKPI -x result.xml ${RobotsReports}
+rebot --name StablityKPI -x output.xml ${RobotsReports}
