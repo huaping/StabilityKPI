@@ -48,7 +48,6 @@ MTBF-013_Download music file
     \    Delete File in Downloads    musicdownload.mp3
 
 MTBF-015_Download a Video file
-    [Tags]    MTBF
     [Timeout]    15 minutes
     : FOR    ${index}    IN RANGE    ${round_download}
     \    Delete File in Downloads    moviedownload.mp4    True
