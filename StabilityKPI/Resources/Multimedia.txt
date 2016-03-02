@@ -4,14 +4,14 @@ Library           ../UiKpiTest.py    ${MUT1}    WITH NAME    MUT1
 *** Keywords ***
 Open Recorder App
     ${result}    MUT1.Open Recorder App
-    Should Be True    ${result}    Open recorder failed
+    #Should Be True    ${result}    Open recorder failed
 
 Delete Recorded files
     MUT1.Delete Record Files
 
 Record 5 seconds Voice
     ${result}    MUT1.Record Voice    5
-    Should Be True    ${result}    Record voice failed
+    #Should Be True    ${result}    Record voice failed
     Sleep    5s
 
 Play Recorded Files
@@ -19,7 +19,7 @@ Play Recorded Files
 
 Open Music Player
     ${result}    MUT1.Open Music App
-    Should Be true    ${result}    Open music failed.
+    #Should Be true    ${result}    Open music failed.
 
 Play Music Shuffle
     MUT1.Play Music Shuffle All
@@ -40,12 +40,12 @@ Play Music Next 20 times
 
 Open Camera
     ${result}    MUT1.Open Camera App
-    Should Be True    ${result}
+    #Should Be True    ${result}
 
 Capture Photo Or Video
     [Arguments]    ${mode}
     ${result}    MUT1.Capture Picture Video    ${mode}
-    Should Be True    ${result}    Capture picture/video failed
+    #Should Be True    ${result}    Capture picture/video failed
 
 Open File from Camera and Delete
     MUT1.Open file From Camera    True
