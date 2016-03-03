@@ -6,7 +6,7 @@ Make Phone Call
     [Arguments]    ${number}
     [Timeout]    2 minutes
     ${result}    MUT1.Dial Number    ${number}
-    #Should be True    ${result}    Dial number failed
+    Should be True    ${result}    Dial number failed
 
 Wait And End Call
     [Timeout]    2 minutes
@@ -20,9 +20,9 @@ Background Call
     [Arguments]    ${number}
     [Timeout]    3 minutes
     ${result}    MUT1.Dial Number    ${number}
-    #Should Be True    ${result}    Dial ${number} failed
+    Should Be True    ${result}    Dial ${number} failed
     ${result}    MUT1.background_call
-    #Should Be True    ${result}    Background failed
+    Should Be True    ${result}    Background failed
 
 Open OngoingCall
     [Timeout]    2 minutes

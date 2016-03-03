@@ -5,7 +5,7 @@ Library           ../UiKpiTest.py    ${MUT1}    WITH NAME    MUT1
 Open Recorder App
     [Timeout]    1 minute
     ${result}    MUT1.Open Recorder App
-    #Should Be True    ${result}    Open recorder failed
+    Should Be True    ${result}    Open recorder failed
 
 Delete Recorded files
     [Timeout]    2 minutes
@@ -14,7 +14,7 @@ Delete Recorded files
 Record 5 seconds Voice
     [Timeout]    1 minute
     ${result}    MUT1.Record Voice    5
-    #Should Be True    ${result}    Record voice failed
+    Should Be True    ${result}    Record voice failed
     Sleep    5s
 
 Play Recorded Files
@@ -24,7 +24,7 @@ Play Recorded Files
 Open Music Player
     [Timeout]    1 minute
     ${result}    MUT1.Open Music App
-    #Should Be true    ${result}    Open music failed.
+    Should Be true    ${result}    Open music failed.
 
 Play Music Shuffle
     [Timeout]    1 minute
@@ -51,13 +51,13 @@ Play Music Next 20 times
 Open Camera
     [Timeout]    1 minute
     ${result}    MUT1.Open Camera App
-    #Should Be True    ${result}
+    Should Be True    ${result}
 
 Capture Photo Or Video
     [Arguments]    ${mode}
     [Timeout]    1 minute
     ${result}    MUT1.Capture Picture Video    ${mode}
-    #Should Be True    ${result}    Capture picture/video failed
+    Should Be True    ${result}    Capture picture/video failed
 
 Open File from Camera and Delete
     [Timeout]    1 minute

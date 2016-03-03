@@ -5,7 +5,7 @@ Library           ../UiKpiTest.py    ${MUT1}    WITH NAME    MUT1
 Open Browser
     [Timeout]    1 minute
     ${result}    MUT1.Open Browser App
-    #Should Be True    ${result}    Open browser failed.
+    Should Be True    ${result}    Open browser failed.
 
 Clear Browser Privacy
     [Timeout]    1 minute
@@ -19,21 +19,21 @@ Open Page
     [Arguments]    ${url}=news.baidu.com
     [Timeout]    1 minute
     ${result}    MUT1.Open Page    url=${url}
-    #Should Be True    ${result}    open page failed
+    Should Be True    ${result}    open page failed
 
 Delete File in Downloads
     [Arguments]    ${file}    ${delete_all}=False
     [Timeout]    1 minute
     Log    Delete file in downloads list
     ${result}    MUT1.Delete File In Downloads    ${file}    delete_all=${delete_all}
-    #Should be True    ${result}    Delete ${file} Failed
+    Should be True    ${result}    Delete ${file} Failed
 
 Open Download file
     [Arguments]    ${file}
     [Timeout]    2 minutes
     Log    open download file:${file}
     ${result}    MUT1.open_download_file    ${file}    timeout=1000
-    #Should be True    ${result}    Open ${file} Failed
+    Should be True    ${result}    Open ${file} Failed
 
 Download File
     [Arguments]    ${filename}
@@ -42,7 +42,7 @@ Download File
     MUT1.Open Browser App
     MUT1.Open Page    http://10.11.32.237/download.php?file=${filename}
     ${download}    MUT1.download save file    3000
-    #Should be true    ${download}    Download ${filename} failed
+    Should be true    ${download}    Download ${filename} failed
 
 Open Link and Verify
     [Arguments]    ${link}    ${verify}
@@ -51,7 +51,7 @@ Open Link and Verify
     ${result}    MUT1.Open Page    url=${link}
     MUT1.click_at_coordinates    400    400
     ${result}    MUT1.Wait For Ui Exists    4000    textContains=${verify}
-    #Should Be True    ${result}    Open LINK ${verify} failed
+    Should Be True    ${result}    Open LINK ${verify} failed
 
 Open Streaming Link
     [Arguments]    ${link}
@@ -60,13 +60,13 @@ Open Streaming Link
     ${result}    MUT1.Open Page    url=${link}
     ${result}    MUT1.verify_open    VideoPlayer    packageName=com.cloudminds.video
     Sleep    10s
-    #Should Be True    ${result}    Open LINK ${verify} failed
+    Should Be True    ${result}    Open LINK ${verify} failed
 
 Open Wifi
     [Arguments]    ${mode}
     [Timeout]    1 minute
     ${result}    MUT1.Open Wifi    ${mode}
-    #Should Be True    ${result}    Open Wifi ${mode} Failed
+    Should Be True    ${result}    Open Wifi ${mode} Failed
 
 Refresh page
     [Timeout]    1 minute

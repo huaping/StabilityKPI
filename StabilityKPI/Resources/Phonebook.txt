@@ -6,7 +6,7 @@ Open Phonebook
     [Timeout]    30 seconds
     MUT1.Open Application    com.android.contacts/.activities.PeopleActivity --activity-clear-top
     ${result}    MUT1.Wait For UI Exists    1000    packageName=com.android.contacts
-    #Should Be True    ${result}    Open contacts app failed
+    Should Be True    ${result}    Open contacts app failed
 
 Create New Contact
     [Timeout]    1 minute

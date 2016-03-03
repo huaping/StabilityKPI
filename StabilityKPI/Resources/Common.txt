@@ -5,7 +5,7 @@ Library           ../UiKpiTest.py    ${MUT1}    WITH NAME    MUT1
 ${round_Pb}       20    #phone book
 ${round_dial}     10    #Dial number round
 ${round_sms}      3
-${round_send_mms}    2
+${round_send_mms}    1
 ${round_openMMS}    30
 ${round_voice}    1
 ${round_music}    2
@@ -47,6 +47,7 @@ Testcase Teardown
     Should Be True    ${finishTime} > ${uptime}    During test System shutdown
 
 GoTo Home
+    [Timeout]    10 seconds
     MUT1.Goto Home
 
 Press Key
