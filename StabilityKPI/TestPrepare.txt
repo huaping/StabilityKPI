@@ -10,3 +10,11 @@ Email_account_prepare
 Restore
     [Tags]    Prepare
     MUT1.Restore Phone
+
+Logtools
+    [Tags]    Prepare
+    MUT1.prepare log tool
+
+Logtools-save
+    [Tags]    savelog
+    MUT1.prepare log tool    save

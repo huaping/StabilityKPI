@@ -70,6 +70,9 @@ adb -s $MUT1 remount
 #### Log Starts #########
 mkdir ${REPORTS}
 adb -s $MUT1 logcat -v time -b main > ${REPORTS}/main_log.txt &
+adb -s $MUT1 logcat -v time -b radio > ${REPORTS}/radio_log.txt &
+adb -s $MUT1 logcat -v time -b events > ${REPORTS}/events_log.txt &
+
 
 #######################
 #   Run Test Case     #
