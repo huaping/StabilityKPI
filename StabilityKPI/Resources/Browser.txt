@@ -8,7 +8,7 @@ Open Browser
     Should Be True    ${result}    Open browser failed.
 
 Clear Browser Privacy
-    [Timeout]    1 minute
+    [Timeout]    2 minutes
     ${result}    MUT1.Clear Browser Privacy
 
 Close Browser
@@ -17,7 +17,7 @@ Close Browser
 
 Open Page
     [Arguments]    ${url}=news.baidu.com
-    [Timeout]    1 minute
+    [Timeout]    2 minutes
     ${result}    MUT1.Open Page    url=${url}
     Should Be True    ${result}    open page failed
 
@@ -37,7 +37,7 @@ Open Download file
 
 Download File
     [Arguments]    ${filename}
-    [Timeout]    2 minutes
+    [Timeout]    3 minutes
     Log    Download file:${filename}
     MUT1.Open Browser App
     MUT1.Open Page    http://10.11.32.237/download.php?file=${filename}

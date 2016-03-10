@@ -12,7 +12,7 @@ Delete Recorded files
     MUT1.Delete Record Files
 
 Record 5 seconds Voice
-    [Timeout]    1 minute
+    [Timeout]    2 minutes
     ${result}    MUT1.Record Voice    5
     Should Be True    ${result}    Record voice failed
     Sleep    5s
@@ -27,7 +27,7 @@ Open Music Player
     Should Be true    ${result}    Open music failed.
 
 Play Music Shuffle
-    [Timeout]    1 minute
+    [Timeout]    2 minutes
     MUT1.Play Music Shuffle All
 
 Open Ongoing music

@@ -7,7 +7,7 @@ Resource          Resources/Common.txt
 *** Test Cases ***
 MTBF-019 Voice Recording, Play and Delete
     [Tags]    MTBF
-    [Timeout]    2 minutes 50 seconds
+    [Timeout]    4 minutes
     : FOR    ${index}    IN RANGE    ${round_voice}
     \    Open Recorder App
     \    Delete Recorded files

@@ -34,11 +34,11 @@ Open Email App
 
 Email Navigation
     [Arguments]    ${whichbox}
-    [Timeout]    1 minute
+    [Timeout]    2 minutes
     MUT1.Email Navigation    ${whichbox}
 
 Delete All Sent Emails
-    [Timeout]    1 minute
+    [Timeout]    2 minutes
     Email Navigation    Sent
     MUT1.Delete All Sent Mails
 
@@ -55,12 +55,12 @@ Check Sentbox not Empty
 
 Forward Email
     [Arguments]    ${title}    ${emailAdrr}
-    [Timeout]    1 minute
+    [Timeout]    2 minutes
     Open Email With Title    ${title}
     ${result}    MUT1.Forward Email    ${emailAdrr}
     Should Be True    ${result}    Forward email failed
 
 Open Email With Title
     [Arguments]    ${title}
-    [Timeout]    1 minute
+    [Timeout]    2 minutes
     MUT1.Open Email Subject    ${title}

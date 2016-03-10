@@ -33,24 +33,24 @@ Suite Teardown
     [Timeout]    1 minute
 
 Testcase Setup
-    [Timeout]    1 minute
+    [Timeout]    2 minutes
     ${uptime}    MUT1.Get Uptime
     Should Be True    ${uptime} != -1    System shutdown
     Log    test start...
     Goto Home
 
 Testcase Teardown
-    [Timeout]    1 minute
+    [Timeout]    2 minutes
     Run Keyword If Test Failed    MUT1.Take Screenshot    0.3    70
     Goto Home
     ${finishTime}    MUT1.Get Uptime
     Should Be True    ${finishTime} > ${uptime}    During test System shutdown
 
 GoTo Home
-    [Timeout]    10 seconds
+    [Timeout]    1 minute
     MUT1.Goto Home
 
 Press Key
     [Arguments]    ${key}
-    [Timeout]    20 seconds
+    [Timeout]    1 minute
     MUT1.Press Key    ${key}

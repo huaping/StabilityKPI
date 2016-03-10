@@ -7,7 +7,7 @@ Resource          Resources/Common.txt
 *** Test Cases ***
 MTBF-011_Browser_Open_Specific_Website
     [Tags]    MTBF
-    [Timeout]    2 minutes 30 seconds
+    [Timeout]    4 minutes
     : FOR    ${index}    IN RANGE    ${round_browser}
     \    Open Browser
     \    Clear Browser Privacy
@@ -16,7 +16,7 @@ MTBF-011_Browser_Open_Specific_Website
 
 MTBF-012 Download a text file
     [Tags]    MTBF
-    [Timeout]    6 minutes
+    [Timeout]    8 minutes
     : FOR    ${index}    IN RANGE    ${round_download}
     \    Delete File in Downloads    text.txt    True
     \    Download File    text.txt
@@ -27,7 +27,7 @@ MTBF-012 Download a text file
 
 MTBF-014_Download a picture
     [Tags]    MTBF
-    [Timeout]    6 minutes
+    [Timeout]    8 minutes
     : FOR    ${index}    IN RANGE    ${round_download}
     \    Delete File in Downloads    picturedownload.jpg    True
     \    Download File    picturedownload.jpg

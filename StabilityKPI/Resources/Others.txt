@@ -26,7 +26,7 @@ Library           ../UiKpiTest.py    ${MUT1}    WITH NAME    MUT1
 *** Keywords ***
 Open App From Home
     [Arguments]    ${app}    ${verify}
-    [Timeout]    6 minutes
+    [Timeout]    8 minutes
     MUT1.Open App From Home    ${app}    ${verify}
 
 Open file manager
@@ -46,11 +46,11 @@ Filemanager Check File Exists
 
 Filemanager Delete folder
     [Arguments]    ${folder}
-    [Timeout]    1 minute
+    [Timeout]    2 minutes
     MUT1.Filemanager delete file    ${folder}
 
 Filemanager Check file not exists
     [Arguments]    ${folder}
-    [Timeout]    1 minute
+    [Timeout]    2 minutes
     ${result}    MUT1.Filemanager check file exists    ${folder}
     Should NOT Be True    ${result}    File ${folder} does exists

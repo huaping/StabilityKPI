@@ -35,7 +35,7 @@ MTBF_007 Open MMS
 
 MTBF-008 Send Email Without Attachment
     [Tags]    MTBF
-    [Timeout]    4 minutes
+    [Timeout]    5 minutes
     Open Email App
     Delete All Sent Emails
     Email Navigation    Inbox
@@ -45,7 +45,7 @@ MTBF-008 Send Email Without Attachment
 
 MTBF-009 Sent Email With Attachment
     [Tags]    MTBF
-    [Timeout]    4 minutes
+    [Timeout]    5 minutes
     Open Email App
     Delete All Sent Emails
     Email Navigation    Inbox

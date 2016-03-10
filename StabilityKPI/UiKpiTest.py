@@ -38,7 +38,8 @@ class UiKpiTest(UiTestLib):
             self.click_ui(resourceId=add_btn)
         else:
             return False
-
+        if self.wait_for_ui_exists(300, textContains='You can synchronize your'):
+            self.click_text('PHONE')
         self.wait_for_ui_exists(1000, text='Add new contact')
         self.type_text(name, text='Name', className='android.widget.EditText')
         self.type_text(number, text='Phone', className='android.widget.EditText')
