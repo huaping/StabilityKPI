@@ -17,9 +17,15 @@ help__()
   exit 1
 }
 
-upload()
+check_device()
 {
-    echo
+    DEVICE_COUNT=$(adb devices | grep $1 | wc -l)
+    if [ ${DEVICE_COUNT} -eq 0 ]; then
+        echo "device disconnected, maybe USB problem, wait for 20seconds to reconnect"
+        sleep 20s
+    fi
+    DEVICE_COUNT=$(adb devices | grep $1 | wc -l)
+    return ${DEVICE_COUNT}
 }
 
 LOGINFOMATION=0
@@ -83,6 +89,12 @@ for((index=1;index<=$ROUND;index++))
     echo ${CREATED_TIME} "###Run Test Case for Round #$index"
     echo "========================================"
     pybot $LOG_INFO --include=${RunTag} -d ${REPORTS}/stability_report_${CREATED_TIME} --variable MUT1:$MUT1 StabilityKPI
+    
+    check_device $MUT1
+    if [ $? -eq 0 ]; then
+        echo "Device disconnected. Run count: $index"
+        break
+    fi
 }
 
 ############End of Logcat ###########
