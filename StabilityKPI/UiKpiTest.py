@@ -397,6 +397,9 @@ class UiKpiTest(UiTestLib):
                     self.fling_forward(oritation='horiz')
                     time.sleep(0.3)
             result=self.wait_for_ui_exists(5000, packageName=packageName)
+            self.press_key('back')
+            self.press_key('back')
+            self.press_key('home')
             if not result:
                 self.logmsg('Open App %s Failed' % appName)
             return result
@@ -709,6 +712,17 @@ class UiKpiTest(UiTestLib):
         self.d.watcher('AUTO_FC_WHEN_ANR').when(textMatches='.*is.*responding.*').click(resourceIdMatches='.*button1')
         self.d.watcher('Auto_FC_CRASH').when(textMatches='Unfortunately.*stopped.*').click(resourceIdMatches='.*button1')
         self.d.watchers.run()
+
+    def trigger_crash_action(self, logpath):
+        """trigger action when watcher happens"""
+        if self.d.watcher("AUTO_FC_WHEN_ANR").triggered or  self.d.watcher("AUTO_FC_WHEN_ANR").triggered:
+            print "dfsadjfa;slkdjfla;s"
+            self.get_logcat_buffer()
+            self.exe_adb_command('pull /sdcard/logcat_d.txt %s')
+            self.exe_adb_command('rm /sdcard/logcat_d.txt')
+
+    def get_logcat_buffer(self):
+        self.exe_adb_command("logcat -d -v time > /sdcard/logcat_d.txt")
 
     ### File manager handling  ####
     def open_file_manager(self):
@@ -1088,6 +1102,8 @@ class UiKpiTest(UiTestLib):
 
     def restore_phone(self ):
         try:
+            if self.wait_for_ui_exists(300, textContains="Tip"):
+                self.click_ui(resourceId="android:id/button1")
             self.open_application('com.android.backup/.MainBackUpActivity')
             self.click_text('Restore')
             self.click_text('System data')
@@ -1102,8 +1118,10 @@ class UiKpiTest(UiTestLib):
 if __name__ == "__main__":
     import sys
     #p = UiKpiTest('ec8fc2f1')
-    p = UiKpiTest('ec8fc231')
-    p.restore_phone()
+    p = UiKpiTest('ec8fc22b')
+    p.crash_watchers()
+    p.click_text('234e234234')
+    p.trigger_crash_action("logcat.txt")
     #print p.open_download_file('')
     #p.open_browser_app()
     #p.open_page('http://192.168.99.188/download.php?file=text.txt')
