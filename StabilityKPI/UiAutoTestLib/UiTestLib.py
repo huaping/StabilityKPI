@@ -33,10 +33,10 @@ class UiTestLib(object):
         self.d = Device(serial)
         self.adb = Adb(serial)
         self.debug = 'True'
-    
+
     def set_debugable(flag):
         self.debug = flag
-    
+
     def set_serial(self, serial):
         """Specify given *serial* device to perform test.
         or export ANDROID_SERIAL=CXFS42343 if you have many devices connected but you don't use this
@@ -62,21 +62,21 @@ class UiTestLib(object):
     def logmsg(self, msg):
         if self.debug == 'True':
             print msg
-            
+
     def exe_adb_command(self, cmd):
         """ Execute adb *cmd*
          Examples:
         | Exe Adb Command | shell getprop  |
         """
         return self.adb.cmd(cmd).wait()
-        
+
     def exe_adb_and_result(self, cmd):
         """Execute adb *cmd* and return lines of the command"""
         lproc = self.adb.cmd(cmd)
         lproc.poll()
         lines = lproc.stdout.readlines()
         return lines
-        
+
     def get_device_info(self):
         """Get Device information
         return info dictionary
@@ -234,12 +234,12 @@ class UiTestLib(object):
         """
         self._result = self.d(**selectors).wait.exists( timeout = int(timeout))
         return self._result
-    
+
     def wait_and_click(self, timeout, **selectors):
         """Wait for uiselector and click"""
         if self.d(**selectors).wait.exists( timeout = int(timeout)):
             self.d(**selectors).click()
-        
+
     def assert_ui_exists(self, **selectors ):
         """
         Assert UiObject appear on the screen
@@ -335,8 +335,9 @@ class UiTestLib(object):
         ts = time.time()
         st = datetime.datetime.fromtimestamp(ts).strftime('%Y%m%d%H%M%S')
         screenshot_path = '%s%s%s.png' % (output_dir, os.sep, st)
+        screenshot_name = '%s%s.png' % (os.sep, st)
         self.d.screenshot(screenshot_path, scale, quality)
-        logger.info('\n<a href="%s">%s</a><br><img src="%s">' % (screenshot_path, st, screenshot_path), html=True)
+        logger.info('\n<a href="%s">%s</a><br><img src="%s">' % (screenshot_path, st, screenshot_name), html=True)
 
     def open_notification(self):
         """
@@ -392,7 +393,7 @@ class UiTestLib(object):
         """
         return self.d(className =className, instance=instance).long_click()
 
-    
+
     def type_text(self, textStr, **selectors):
         """
         type text on selectors
@@ -642,8 +643,8 @@ class UiTestLib(object):
         if self.wait_for_ui_exists(1000, text="Complete action using"):
             self._result = self.click_ui(text='Phone')
             return self._result
-            
-            
+
+
     def end_phone_call(self):
         """
         End phone call by press end_call key, return true if successfull.
@@ -651,8 +652,8 @@ class UiTestLib(object):
         if p.get_call_status() == "2":
             p.press_key("6")
         return p.get_call_status() == "0"
-        
-        
+
+
     def receive_call_on_phone(self):
         """
         Receive phone calls in 20s
@@ -768,7 +769,7 @@ class UiTestLib(object):
             return False
 
 
-        
+
     def get_call_status(self):
         """
         Get music playing status, 0 is idle, 1 is incoming call, 2 is ongoing call
@@ -789,7 +790,7 @@ class UiTestLib(object):
         return -1
 
 
-    
+
     def send_sms(self, number, text='This is an example text body.'):
         """
         Send SMS to *number*, with *text*
@@ -881,19 +882,19 @@ class UiTestLib(object):
             self.click_ui(text='Songs')
 
         return self.click_ui(text='Shuffle all')
-    
+
     def goto_home(self):
         self.press_key('back')
         self.press_key('back')
         self.press_key('back')
         self.press_key('home')
-    
+
     def scroll_forward(self, oritation='vert', steps=20):
         if oritation == 'horiz':
             self.d(scrollable=True).scroll.horiz.forward(steps)
         else:
             self.d(scrollable=True).scroll(steps)
-            
+
     def scroll_backward(self, oritation='vert', steps=10):
         if oritation == 'horiz':
             self.d(scrollable=True).scroll.horiz.backward(steps)
@@ -904,13 +905,13 @@ class UiTestLib(object):
             self.d(scrollable=True).fling.horiz.forward(max_swipes=max_swipes)
         else:
             self.d(scrollable=True).fling.forward(max_swipes=max_swipes)
-    
+
     def fling_backward(self, oritation='vert', max_swipes=5):
         if oritation == 'horiz':
             self.d(scrollable=True).fling.horiz.backward(max_swipes=max_swipes)
         else:
             self.d(scrollable=True).fling.backward(max_swipes=max_swipes)
-    
+
     def fling_toBeginning(self, oritation='vert', max_swipes=5):
         if oritation == 'horiz':
             self.d(scrollable=True).fling.horiz.toBeginning(max_swipes=max_swipes)
@@ -922,7 +923,7 @@ class UiTestLib(object):
             self.d(scrollable=True).fling.horiz.toEnd(max_swipes=max_swipes)
         else:
             self.d(scrollable=True).fling.toEnd(max_swipes=max_swipes)
-    
+
     def get_uptime(self):
         """up time: 1 days, 23:50:32, idle time: 4 days, sleep time: 1 days 03:54:24"""
         line = self.exe_adb_and_result('shell uptime')
@@ -953,7 +954,7 @@ class UiTestLib(object):
             h = hr*3600+m*60+s
         uptime = int(day)*24*3600 + h
         return uptime
-        
+
 if __name__ == "__main__":
     #pass
     p = UiTestLib('ec88c23e')
