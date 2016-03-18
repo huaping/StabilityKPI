@@ -28,6 +28,7 @@ Suite Setup
     ${uptime}    MUT1.Get Uptime
     Should Be True    ${uptime} != -1    System shutdown
     MUT1.Crash Watchers
+    ${result}    MUT1.Open Wifi    on
 
 Suite Teardown
     [Timeout]    1 minute

@@ -1102,7 +1102,7 @@ class UiKpiTest(UiTestLib):
 
     def restore_phone(self ):
         try:
-            if self.wait_for_ui_exists(300, textContains="Tip"):
+            if self.wait_for_ui_exists(3000, text="Tip"):
                 self.click_ui(resourceId="android:id/button1")
             self.open_application('com.android.backup/.MainBackUpActivity')
             self.click_text('Restore')
@@ -1122,6 +1122,7 @@ if __name__ == "__main__":
     p.crash_watchers()
     p.click_text('234e234234')
     p.trigger_crash_action("logcat.txt")
+
     #print p.open_download_file('')
     #p.open_browser_app()
     #p.open_page('http://192.168.99.188/download.php?file=text.txt')

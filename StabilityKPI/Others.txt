@@ -57,6 +57,7 @@ MTBF-026 Wifi
     \    Refresh Page
     \    Sleep    4s
     Close Browser
+    Open Wifi    on
 
 MTBF-027 Multi-task phone and browser
     [Tags]    MTBF

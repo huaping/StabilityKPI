@@ -60,7 +60,7 @@ Open Streaming Link
     ${result}    MUT1.Open Page    url=${link}
     ${result}    MUT1.verify_open    VideoPlayer    packageName=com.cloudminds.video
     Sleep    10s
-    Should Be True    ${result}    Open LINK ${verify} failed
+    Should Be True    ${result}    Open LINK ${link} failed
 
 Open Wifi
     [Arguments]    ${mode}
