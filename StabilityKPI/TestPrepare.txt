@@ -10,6 +10,7 @@ Email_account_prepare
 
 Restore
     [Tags]    Prepare
+    [Timeout]    5 minutes
     MUT1.Restore Phone
 
 Logtools
@@ -19,4 +20,5 @@ Logtools
 
 Logtools-save
     [Tags]    savelog
+    [Timeout]    5 minutes
     MUT1.prepare log tool    save

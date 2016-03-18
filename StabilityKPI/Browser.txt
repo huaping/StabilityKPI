@@ -72,6 +72,6 @@ MTBF-020 Streaming Test
     [Timeout]    10 minutes
     Open Browser
     #Clear Browser Privacy
-    Open Streaming Link    rtsp://121.41.73.249/1001_home.sdp
+    Open Streaming Link    rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov
     Sleep    10s
     Goto Home
