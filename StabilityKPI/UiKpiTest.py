@@ -1102,9 +1102,9 @@ class UiKpiTest(UiTestLib):
 
     def restore_phone(self ):
         try:
+            self.open_application('com.android.backup/.MainBackUpActivity')
             if self.wait_for_ui_exists(3000, text="Tip"):
                 self.click_ui(resourceId="android:id/button1")
-            self.open_application('com.android.backup/.MainBackUpActivity')
             self.click_text('Restore')
             self.click_text('System data')
             self.click_ui(textMatches='\d+.*')
