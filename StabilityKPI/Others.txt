@@ -12,7 +12,7 @@ Resource          Resources/Call.txt
 MTBF-025 Home Apps Browsing
     [Tags]    MTBF
     [Template]    Open App From Home
-    [Timeout]    10 minutes
+    [Timeout]    20 minutes
     @{calendar}
     @{settings}
     @{fileExplorer}
@@ -36,32 +36,36 @@ MTBF-025 Home Apps Browsing
 
 MTBF-024 File Manager folder handle
     [Tags]    MTBF
-    [Timeout]    10 minutes
+    [Timeout]    12 minutes
     : FOR    ${index}    IN RANGE    ${round_filemanager}
     \    Open File manager
     \    Filemanager Create Folder    010
     \    Filemanager Check File Exists    010
     \    Filemanager Delete Folder    010
     \    Filemanager Check file not exists    010
+    \    Sleep    1min    adjust speed
 
 MTBF-026 Wifi
     [Tags]    MTBF
-    [Timeout]    10 minutes
+    [Timeout]    20 minutes
     : FOR    ${index}    IN RANGE    5
     \    Open Wifi    off
+    \    Sleep    10s
     \    Open Wifi    on
+    \    Sleep    10s
     \    Open Wifi    on
+    \    Sleep    10s
     Open Browser
     Open Page
     : FOR    ${index}    IN RANGE    ${round_wifi}
     \    Refresh Page
-    \    Sleep    4s
+    \    Sleep    10s
     Close Browser
     Open Wifi    on
 
 MTBF-027 Multi-task phone and browser
     [Tags]    MTBF
-    [Timeout]    8 minutes
+    [Timeout]    40 minutes
     : FOR    ${index}    IN RANGE    ${round_multitask}
     \    Background Call    10086
     \    Open Browser
@@ -72,3 +76,4 @@ MTBF-027 Multi-task phone and browser
     \    End Call
     \    Open Browser
     \    Close Browser
+    \    Sleep    1min

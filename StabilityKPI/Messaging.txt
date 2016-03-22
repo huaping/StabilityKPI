@@ -7,48 +7,55 @@ Resource          Resources/Messaging.txt
 *** Test Cases ***
 MTBF_004_5_Open SMS and Forward SMS
     [Tags]    MTBF
-    [Timeout]    10 minutes
+    [Timeout]    13 minutes
     : FOR    ${index}    IN RANGE    ${round_sms}
     \    Open Messaging App
     \    Open Message by Content    SMS content
     \    Forward Message    13466745997    SMS content
     \    Delete Message By Contact Name    5997
+    \    Sleep    1min    adjust speed
 
 MTBF_006 Forward MMS and Delete Sent
     [Tags]    MTBF
-    [Timeout]    10 minutes
+    [Timeout]    13 minutes
     : FOR    ${index}    IN RANGE    ${round_send_mms}
     \    Open Messaging App
     \    Open Message by Content    This is MMS
     \    Forward Message    13466745997    This is MMS    True
     \    Delete Message By Contact Name    5997
     \    Goto Home
+    \    Sleep    1min    adjust speed
 
 MTBF_007 Open MMS
     [Tags]    MTBF
-    [Timeout]    10 minutes
+    [Timeout]    25 minutes
     : FOR    ${index}    IN RANGE    ${round_openMMS}
     \    Open Messaging App
     \    Open Message by Content    This is MMS
     \    Play SlideShow
     \    Goto Home
+    \    Sleep    30s    adjust speed
 
 MTBF-008 Send Email Without Attachment
     [Tags]    MTBF
-    [Timeout]    5 minutes
-    Open Email App
-    Delete All Sent Emails
-    Email Navigation    Inbox
-    Forward Email    This is a mail    phqi@sina.com
-    Goto Home
-    Check Sentbox NOT Empty
+    [Timeout]    15 minutes
+    :FOR    ${index}    IN RANGE    ${round_openMMS}
+    \    Open Email App
+    \    Delete All Sent Emails
+    \    Email Navigation    Inbox
+    \    Forward Email    This is a mail    phqi@sina.com
+    \    Goto Home
+    \    Check Sentbox NOT Empty
+    \    Sleep    2min    adjust speed
 
 MTBF-009 Sent Email With Attachment
     [Tags]    MTBF
-    [Timeout]    5 minutes
-    Open Email App
-    Delete All Sent Emails
-    Email Navigation    Inbox
-    Forward Email    attachment test    phqi@sina.com
-    Goto Home
-    Check Sentbox NOT Empty
+    [Timeout]    15 minutes
+    :FOR    ${index}    IN RANGE    ${round_openMMS}
+    \    Open Email App
+    \    Delete All Sent Emails
+    \    Email Navigation    Inbox
+    \    Forward Email    attachment test    phqi@sina.com
+    \    Goto Home
+    \    Check Sentbox NOT Empty
+    \    Sleep    1min    adjust speed

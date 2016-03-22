@@ -28,6 +28,7 @@ Open App From Home
     [Arguments]    ${app}    ${verify}
     [Timeout]    8 minutes
     MUT1.Open App From Home    ${app}    ${verify}
+    Sleep    5s
 
 Open file manager
     [Timeout]    1 minute

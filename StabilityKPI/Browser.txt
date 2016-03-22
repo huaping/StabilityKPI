@@ -7,71 +7,78 @@ Resource          Resources/Common.txt
 *** Test Cases ***
 MTBF-011_Browser_Open_Specific_Website
     [Tags]    MTBF
-    [Timeout]    4 minutes
+    [Timeout]    10 minutes
     : FOR    ${index}    IN RANGE    ${round_browser}
     \    Open Browser
     \    Clear Browser Privacy
     \    Open Page
     \    Close Browser
+    \    Sleep    2min    adjust speed
 
 MTBF-012 Download a text file
     [Tags]    MTBF
-    [Timeout]    8 minutes
+    [Timeout]    18 minutes
     : FOR    ${index}    IN RANGE    ${round_download}
     \    Delete File in Downloads    text.txt    True
     \    Download File    text.txt
-    \    Sleep    3s    sleep for download file
+    \    Sleep    1min    sleep for download file
     \    Open Download file    text.txt
     \    Goto Home
     \    Delete File in Downloads    text.txt
+    \    Sleep    1min    adjust speed
 
 MTBF-014_Download a picture
     [Tags]    MTBF
-    [Timeout]    8 minutes
+    [Timeout]    18 minutes
     : FOR    ${index}    IN RANGE    ${round_download}
     \    Delete File in Downloads    picturedownload.jpg    True
     \    Download File    picturedownload.jpg
-    \    Sleep    5s
+    \    Sleep    1min
     \    Open Download file    picturedownload.jpg
     \    Goto Home
     \    Delete File in Downloads    picturedownload.jpg
+    \    Sleep    1min    adjust speed
 
 MTBF-013_Download music file
     [Tags]    MTBF
-    [Timeout]    10 minutes
+    [Timeout]    18 minutes
     : FOR    ${index}    IN RANGE    ${round_download}
     \    Delete File in Downloads    musicdownload.mp3    True
     \    Download File    musicdownload.mp3
-    \    Sleep    5s
+    \    Sleep    1min
     \    Open Download file    musicdownload.mp3
     \    Goto Home
     \    Delete File in Downloads    musicdownload.mp3
+    \    Sleep    1min    adjust speed
 
 MTBF-015_Download a Video file
     [Tags]    MTBF
-    [Timeout]    15 minutes
+    [Timeout]    25 minutes
     : FOR    ${index}    IN RANGE    ${round_download}
     \    Delete File in Downloads    moviedownload.mp4    True
     \    Download File    moviedownload.mp4
-    \    Sleep    15s
+    \    Sleep    1min
     \    Open Download file    moviedownload.mp4
     \    Goto Home
     \    Delete File in Downloads    moviedownload.mp4
+    \    Sleep    1min    adjust speed
 
 MTBF-016_Browser_Open_Link
     [Tags]    MTBF
-    [Timeout]    10 minutes
+    [Timeout]    15 minutes
     : FOR    ${index}    IN RANGE    ${round_browser}
     \    Open Browser
     \    Clear Browser Privacy
     \    Open Link and Verify    http://10.11.32.237/openlink.html    xw.qq.com
     \    Close Browser
+    \    Sleep    1min    adjust speed
 
 MTBF-020 Streaming Test
     [Tags]    MTBF
-    [Timeout]    10 minutes
-    Open Browser
-    #Clear Browser Privacy
-    Open Streaming Link    rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov
-    Sleep    10s
-    Goto Home
+    [Timeout]    15 minutes
+    :FOR    ${index}    IN RANGE    ${round_streaming}
+    \    Open Browser
+    \    #Clear Browser Privacy
+    \    Open Streaming Link    rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov
+    \    Sleep    2min
+    \    Goto Home
