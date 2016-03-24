@@ -954,7 +954,20 @@ class UiTestLib(object):
             h = hr*3600+m*60+s
         uptime = int(day)*24*3600 + h
         return uptime
-
+        
+    def run_instrument_case(self, runner, package, clz = "", testName = ""):
+        # adb install ./out/target/product/eagle/data/app/wifitoggletest.apk 
+        # adb shell am instrument -w com.example.wifitoggle.tests/android.test.InstrumentationTestRunner
+        if len(testName) or len(clz):
+            print self.exe_adb_and_result('shell am instrument -c %s.%s#%s -w %s/%s' %(package, clz, testName, package, runner))
+        else:
+            print self.exe_adb_and_result('shell am instrument-w %s/%s' %(package, runner))
+    def run_uiautomator_case(self, jarName, clazz, testcaseName=""):
+        if len(testcaseName):
+            print self.exe_adb_and_result('shell uiautomator runtest %s -c %s#%s' % (jarName, clazz, testcaseName) )
+        else:
+            print self.exe_adb_and_result('shell uiautomator runtest %s -c %s' % (jarName, clazz) )
+            
 if __name__ == "__main__":
     #pass
     p = UiTestLib('ec88c23e')
