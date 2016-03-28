@@ -154,29 +154,34 @@ class UiKpiTest(UiTestLib):
         """
         print 'mms:',mms
         try:
-            if not self.wait_for_ui_exists(500, textContains=content):
+
+            if self.wait_for_ui_exists(500, textContains='Message detail'):
+                self.press_key('menu')
+                self.click_text('Forward')
+            elif self.wait_for_ui_exists(500, textContains=content):
                 self.scroll_to_find(textContains=content)
-            self.long_click_ui(textContains=content)
-            #wait for com.android.mms:id/forward
-            forward_btn = 'com.android.mms:id/forward'
-            if self.wait_for_ui_exists(2000, resourceId=forward_btn):
-                self.click_ui(resourceId=forward_btn)
-                recipt_editor = 'com.android.mms:id/recipients_editor'
-                self.wait_for_ui_exists(1000, resourceId=recipt_editor)
-                self.type_text(phoneNum, resourceId=recipt_editor)
-                if mms == 'True':
-                    self.click_ui(resourceId='com.android.mms:id/send_button_mms')
-                    time.sleep(5)
-                else:
-                    self.click_ui(resourceId='com.android.mms:id/send_button_sms')
-                time.sleep(1)
-                self.press_key('back')  #input method
-                self.press_key('back')  #msg list
-                self.open_message_app()
-                if mms == 'True':
-                    return self.wait_for_ui_exists(2000, textContains='Fwd:')
-                else:
-                    return self.wait_for_ui_exists(2000, textContains='Me:')
+                self.long_click_ui(textContains=content)
+                #wait for com.android.mms:id/forward
+                forward_btn = 'com.android.mms:id/forward'
+                if self.wait_for_ui_exists(2000, resourceId=forward_btn):
+                    self.click_ui(resourceId=forward_btn)
+            recipt_editor = 'com.android.mms:id/recipients_editor'
+            self.wait_for_ui_exists(1000, resourceId=recipt_editor)
+            self.type_text(phoneNum, resourceId=recipt_editor)
+            time.sleep(1.5)
+            if mms == 'True':
+                 self.click_ui(resourceId='com.android.mms:id/send_button_mms')
+                 time.sleep(5)
+            else:
+                 self.click_ui(resourceId='com.android.mms:id/send_button_sms')
+            time.sleep(1)
+            self.press_key('back')  #input method
+            self.press_key('back')  #msg list
+            self.open_message_app()
+            if mms == 'True':
+                return self.wait_for_ui_exists(2000, textContains='Fwd:')
+            else:
+                return self.wait_for_ui_exists(2000, textContains='Me:')
         except Exception, e:
             print Exception, ":", e
             self.logmsg("Forward message exception happens.")
@@ -1118,10 +1123,12 @@ class UiKpiTest(UiTestLib):
 if __name__ == "__main__":
     import sys
     #p = UiKpiTest('ec8fc2f1')
-    p = UiKpiTest('ec8fc22b')
-    p.crash_watchers()
-    p.click_text('234e234234')
-    p.trigger_crash_action("logcat.txt")
+    p = UiKpiTest('ec8fc21d')
+    p.open_message_app()
+    p.open_message('SMS content')
+    p.forward_message('13466745997', 'SMS content', 'False')
+
+
 
     #print p.open_download_file('')
     #p.open_browser_app()
