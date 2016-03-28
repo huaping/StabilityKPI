@@ -75,7 +75,7 @@ adb -s $MUT1 remount
 
 #### Log Starts #########
 mkdir ${REPORTS}
-adb -s $MUT1 logcat -v time -b main > ${REPORTS}/main_log.txt &
+adb -s $MUT1 logcat -v time -b main -b system > ${REPORTS}/main_log.txt &
 adb -s $MUT1 logcat -v time -b radio > ${REPORTS}/radio_log.txt &
 adb -s $MUT1 logcat -v time -b events > ${REPORTS}/events_log.txt &
 
@@ -89,7 +89,7 @@ for((index=1;index<=$ROUND;index++))
     echo ${CREATED_TIME} "###Run Test Case for Round #$index"
     echo "========================================"
     pybot $LOG_INFO --include=${RunTag} -d ${REPORTS}/stability_report_${CREATED_TIME} --variable MUT1:$MUT1 StabilityKPI
- 
+
     check_device $MUT1
     if [ $? -eq 0 ]; then
         echo "Device disconnected. Run count: $index"
