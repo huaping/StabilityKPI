@@ -158,8 +158,7 @@ class UiKpiTest(UiTestLib):
             if self.wait_for_ui_exists(500, textContains='Message detail'):
                 self.press_key('menu')
                 self.click_text('Forward')
-            elif self.wait_for_ui_exists(500, textContains=content):
-                self.scroll_to_find(textContains=content)
+            else:
                 self.long_click_ui(textContains=content)
                 #wait for com.android.mms:id/forward
                 forward_btn = 'com.android.mms:id/forward'
@@ -181,7 +180,7 @@ class UiKpiTest(UiTestLib):
             if mms == 'True':
                 return self.wait_for_ui_exists(2000, textContains='Fwd:')
             else:
-                return self.wait_for_ui_exists(2000, textContains='Me:')
+                return self.wait_for_ui_exists(2000, textMatches='.*:[\s\S]*%s.*[\s\S]*.*[\s\S]*' % content )
         except Exception, e:
             print Exception, ":", e
             self.logmsg("Forward message exception happens.")
