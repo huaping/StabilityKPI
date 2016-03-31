@@ -284,7 +284,7 @@ class UiKpiTest(UiTestLib):
                     return False
                 self.click_ui(textContains=fileName)
                 print time.time()
-                if self.open_with('HTML Viewer'):
+                if self.open_with('HTMLViewer'):
                     print "HTML viewer"
                 elif self.open_with('VideoPlayer'):
                     print "video player"
