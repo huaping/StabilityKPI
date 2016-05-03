@@ -14,7 +14,6 @@ MTBF-019 Voice Recording, Play and Delete
     \    Record 5 seconds Voice
     \    Play Recorded Files
     \    Delete Recorded files
-    \    Sleep    1min    adjust speed
 
 MTBF-021 Open Music player, playing, close
     [Tags]    MTBF
@@ -27,7 +26,6 @@ MTBF-021 Open Music player, playing, close
     \    Goto Home
     \    Stop Music Playing
     \    Goto Home
-    \    Sleep    1min    adjust speed
 
 MTBF-022 Capture Video
     [Tags]    MTBF
@@ -37,7 +35,6 @@ MTBF-022 Capture Video
     \    Capture Photo Or Video    video
     \    Open File from Camera and Delete
     \    Goto Home
-    \    Sleep    1min    adjust speed
 
 MTBF-023 Capture photo
     [Tags]    MTBF
@@ -47,7 +44,6 @@ MTBF-023 Capture photo
     \    Capture Photo Or Video    still
     \    Open File from Camera and Delete
     \    Goto Home
-    \    Sleep    20s    adjust speed
 
 Stress Capture photo
     [Tags]    Stress

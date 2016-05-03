@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from UiAutoTestLib import UiTestLib
+from robot.api import logger
+from robot.libraries.BuiltIn import BuiltIn
 import time
 import re
 import random
@@ -715,18 +717,23 @@ class UiKpiTest(UiTestLib):
     def crash_watchers(self):
         self.d.watcher('AUTO_FC_WHEN_ANR').when(textMatches='.*is.*responding.*').click(resourceIdMatches='.*button1')
         self.d.watcher('Auto_FC_CRASH').when(textMatches='Unfortunately.*stopped.*').click(resourceIdMatches='.*button1')
+        self.d.watcher('Auto_FC_CRASH').when(textMatches='WLAN disconnected.*').click(resourceIdMatches='.*button1')
         self.d.watchers.run()
 
-    def trigger_crash_action(self, logpath):
+    def trigger_crash_action(self):
         """trigger action when watcher happens"""
         if self.d.watcher("AUTO_FC_WHEN_ANR").triggered or  self.d.watcher("AUTO_FC_WHEN_ANR").triggered:
-            print "dfsadjfa;slkdjfla;s"
-            self.get_logcat_buffer()
-            self.exe_adb_command('pull /sdcard/logcat_d.txt %s')
-            self.exe_adb_command('rm /sdcard/logcat_d.txt')
+                self.pull_log_files()
+
+    def pull_log_files(self):
+        self.get_logcat_buffer()
+        output_dir = BuiltIn().get_variable_value('${OUTPUTDIR}')
+        tc_name = BuiltIn().get_variable_value('${TEST NAME}')
+        self.exe_adb_command('pull /sdcard/logcat_d.txt %s%s%s.txt' % (output_dir,  os.sep, tc_name.replace(' ', '')))
+        self.exe_adb_command('rm /sdcard/logcat_d.txt')
 
     def get_logcat_buffer(self):
-        self.exe_adb_command("logcat -d -v time > /sdcard/logcat_d.txt")
+        self.exe_adb_command("logcat -b main -b system -b events -d -v time > /sdcard/logcat_d.txt")
 
     ### File manager handling  ####
     def open_file_manager(self):
@@ -1098,6 +1105,8 @@ class UiKpiTest(UiTestLib):
             if not self.d(resourceIdMatches='.*switch_widget').checked:
                 return True
             self.click_ui(resourceIdMatches='.*switch_widget')
+            if self.wait_for_ui_exists(200, textMatches='WLAN disconnected.*'):
+                self.click_ui(resourceId="android:id/button1")
             return self.d(resourceIdMatches='.*switch_widget', checked=False).wait.exists(timeout=3000)
         else:
             print "please confirm you set parameter on or off"
@@ -1119,14 +1128,20 @@ class UiKpiTest(UiTestLib):
             print Exception, ':', e
             return False
 
+    def check_wifi_popup(self):
+        if self.wait_for_ui_exists(200, textMatches='WLAN disconnected.*'):
+                self.click_ui(resourceId="android:id/button1")
+
+
 if __name__ == "__main__":
     import sys
     #p = UiKpiTest('ec8fc2f1')
-    p = UiKpiTest('ec8fc21d')
-    p.open_message_app()
-    p.open_message('SMS content')
-    p.forward_message('13466745997', 'SMS content', 'False')
-
+    p = UiKpiTest('5275d2d')
+    p.crash_watchers()
+    # p.open_message_app()
+    #p.open_message('SMS content')
+    #p.forward_message('13466745997', 'SMS content', 'False')
+    p.click_text('Angel')
 
 
     #print p.open_download_file('')

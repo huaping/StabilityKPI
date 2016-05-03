@@ -43,7 +43,6 @@ MTBF-024 File Manager folder handle
     \    Filemanager Check File Exists    010
     \    Filemanager Delete Folder    010
     \    Filemanager Check file not exists    010
-    \    Sleep    1min    adjust speed
 
 MTBF-026 Wifi
     [Tags]    MTBF
@@ -76,4 +75,3 @@ MTBF-027 Multi-task phone and browser
     \    End Call
     \    Open Browser
     \    Close Browser
-    \    Sleep    1min

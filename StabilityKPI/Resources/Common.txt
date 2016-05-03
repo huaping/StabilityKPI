@@ -37,15 +37,18 @@ Testcase Setup
     [Timeout]    2 minutes
     ${uptime}    MUT1.Get Uptime
     Should Be True    ${uptime} != -1    System shutdown
+    MUT1.Check WiFi Popup
     Log    test start...
     Goto Home
 
 Testcase Teardown
     [Timeout]    2 minutes
+    MUT1.Trigger Crash Action
     Run Keyword If Test Failed    MUT1.Take Screenshot    0.3    70
     Goto Home
     ${finishTime}    MUT1.Get Uptime
     Should Be True    ${finishTime} > ${uptime}    During test System shutdown
+    Run Keyword if test passed    Sleep    1min
 
 GoTo Home
     [Timeout]    1 minute

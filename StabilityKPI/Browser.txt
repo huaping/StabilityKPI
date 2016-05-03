@@ -13,7 +13,6 @@ MTBF-011_Browser_Open_Specific_Website
     \    Clear Browser Privacy
     \    Open Page
     \    Close Browser
-    \    Sleep    2min    adjust speed
 
 MTBF-012 Download a text file
     [Tags]    MTBF
@@ -25,7 +24,6 @@ MTBF-012 Download a text file
     \    Open Download file    text.txt
     \    Goto Home
     \    Delete File in Downloads    text.txt
-    \    Sleep    1min    adjust speed
 
 MTBF-014_Download a picture
     [Tags]    MTBF
@@ -37,7 +35,6 @@ MTBF-014_Download a picture
     \    Open Download file    picturedownload.jpg
     \    Goto Home
     \    Delete File in Downloads    picturedownload.jpg
-    \    Sleep    1min    adjust speed
 
 MTBF-013_Download music file
     [Tags]    MTBF
@@ -49,7 +46,6 @@ MTBF-013_Download music file
     \    Open Download file    musicdownload.mp3
     \    Goto Home
     \    Delete File in Downloads    musicdownload.mp3
-    \    Sleep    1min    adjust speed
 
 MTBF-015_Download a Video file
     [Tags]    MTBF
@@ -61,7 +57,6 @@ MTBF-015_Download a Video file
     \    Open Download file    moviedownload.mp4
     \    Goto Home
     \    Delete File in Downloads    moviedownload.mp4
-    \    Sleep    1min    adjust speed
 
 MTBF-016_Browser_Open_Link
     [Tags]    MTBF
@@ -71,12 +66,11 @@ MTBF-016_Browser_Open_Link
     \    Clear Browser Privacy
     \    Open Link and Verify    http://10.11.32.237/openlink.html    xw.qq.com
     \    Close Browser
-    \    Sleep    1min    adjust speed
 
 MTBF-020 Streaming Test
     [Tags]    MTBF
     [Timeout]    15 minutes
-    :FOR    ${index}    IN RANGE    ${round_streaming}
+    : FOR    ${index}    IN RANGE    ${round_streaming}
     \    Open Browser
     \    #Clear Browser Privacy
     \    Open Streaming Link    rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov
